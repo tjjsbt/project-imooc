@@ -1,0 +1,28 @@
+
+body {
+    text-align: center;
+    background-color: #ccc;
+}
+
+.wrap {
+    margin: 0 auto;
+    width: 800px;
+}
+
+#quoteDisplay {
+	border-radius:3px;
+    background-color: #fff;
+    padding: 60px 50px;
+    width: 700px;
+    height: 200px;
+    border: 1px solid #ccc;
+
+}
+.share {
+	float: left;
+	width: 350px;
+	
+}
+button{
+	float:right;
+}
