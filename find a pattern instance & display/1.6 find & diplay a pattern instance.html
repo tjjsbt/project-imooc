@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>1.6找到并突出显示一个模式的所有实例</title>
+</head>
+	<style type="text/css">
+		.found{
+			background: #ff0;
+		}
+		
+	</style>
+<body>
+    <form id="textsearch">
+        <textarea id="txt" cols="200" rows="10">
+            The pineapple is nature’s healing fruit. It is a nutritionally-packed member of the bromeliad family. This delightful tropical fruit is high in the enzyme bromelain and the antioxidant vitamin C, both of which play a major role in the body’s healing processes. A fresh pineapple is the only known source of the enzyme bromelain, which has been used in studies to determine its effectiveness in alleviating joint pain, arthritis, reduce inflammation, inhibit tumor growth and shorten recovery time following plastic surgery. As an excellent source of the strong antioxidant vitamin C, the pineapple can help combat the formation of free radicals known to cause cancer. NUTRITIONAL BREAKDOWN OF THE PINEAPPLE One cup of fresh pineapple chunks contains approximately 82 calories, 0 grams of fat, 0 grams of cholesterol, 2 milligrams of sodium, 22 grams of total carbohydrate (including 16 grams of sugar and 2.3 grams of fiber) and 1 gram of protein. One cup of fresh pineapple chunks provides amazing 131% of your vitamin C needs for the day, 2% of vitamin A needs, 2% of calcium and 2% of iron. The pineapple is also a source of important vitamins and minerals such as thiamin, riboflavin, vitamin B-6, folate, pantothenic acid, magnesium, manganese and potassium and antioxidants and polyphenols such as beta-carotene. Once you read this, you will surely join the army of weightwatchers who adore using the pineapple for their green juices. Not only does the pineapple give a juice a nice fragrant taste, but it also makes it thicker and healthier! This juice is also very calming to the nerves. Moreover, it is a helpful drink for relieving stress, and for a good night’s sleep. Drink it early in the evening, on an empty stomach, right before having your light, healthy dinner. Other health benefits of this master juice combo include: relief from chronic inflammatory conditions (E.g. Carpal tunnel syndrome, gout, arthritis) relief from asthma attacks easing off pain in an all-natural way fast healing of injury and surgery wounds digestion aid after a heavy meaty meal sore throat treatment lowering blood pressure and cholesterol levels help with age-related macular degeneration natural control of blood pressure boosting fertility heart health improvement skin rejuvenating Anti-inflammatory and Nerve-calming Juice Recipe: For an excellent juice select a pineapple with a firm, plump body without bruising or soft spots and green leaves at the crown. A green outer shell does not mean the pineapple is not ripe and contrary to popular belief, neither does the ease in which the leaves pull from the crown. Ingredients: ½ small pineapple 3 sticks of celery 1-2 heads of Romaine lettuce 1 cucumber 1-inch ginger-root Preparation: All you have to do is put all needed ingredients into your blender and wait until it does the job.
+        </textarea>
+        <p>
+            Search pattern:
+            <input type="text" id="pattern">
+        </p>
+    </form>
+    <button id="searchSubmit">Search for pattern</button>
+    <div id="searchResult"></div>
+    <script type="text/javascript">
+    document.getElementById('searchSubmit').onclick = function() {
+        //获取模式
+        var pattern = document.getElementById('pattern').value;
+        var re = new RegExp(pattern, 'g');
+
+        // 获取字符串
+        var searchStr = document.getElementById('txt').value;
+
+        var matchArr;
+        var resultStr = "<p>";
+        var first = 0;
+        var last = 0;
+
+        //找到每一个匹配
+        while ((matchArr = re.exec(searchStr)) != null) {
+            last = matchArr.index;
+
+            //获取所有匹配的字符串，将其连起来
+            resultStr += searchStr.substring(first, last);
+            console.log(resultStr);
+
+            //使用class，添加匹配的字符串
+            resultStr += "<span class='found'>" + matchArr[0] + '</span>';
+            
+            first = re.lastIndex;
+            
+        }
+
+        //完成字符串
+        resultStr += searchStr.substring(first, searchStr.length);
+        console.log(resultStr);
+        resultStr += '</p>';
+        console.log(resultStr);
+
+        //将文字输出
+        document.getElementById('searchResult').innerHTML = resultStr;
+        
+    }
+    </script>
+</body>
+
+</html>
