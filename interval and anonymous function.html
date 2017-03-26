@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>1.10 interval and anonymous function</title>
+    <style type="text/css">
+    #redbox {
+        position: absolute;
+        left: 100px;
+        top: 100px;
+        width: 200px;
+        height: 300px;
+        background: red;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="redbox"></div>
+    <script type="text/javascript">
+    var intervalID = null;
+
+    document.getElementById('redbox').addEventListener('click', starBox, false);
+
+    function starBox() {
+        if (intervalID == null) {
+            var x = 100;
+            intervalID = setInterval(
+                function() {
+                    x += 5;
+                    var left = x + 'px';
+                    document.getElementById("redbox").style.left = left;
+                }, 100);
+        } else {
+            clearInterval(intervalID);
+            intervalID = null;
+        }
+    }
+    </script>
+</body>
+
+</html>
