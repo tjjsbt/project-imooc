@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>convert IOS8601 Date to Javascript Date</title>
+</head>
+<body>
+	<form>
+		<p>Datestring in ISO 8601 format: <input type="text" id="dateString"></p>
+	</form>
+	<button id="dateSubmit">Convert Date</button>
+	<div id="result"></div>
+	<script type="text/javascript">
+		document.getElementById("dateSubmit").onclick = function(){
+			var dtstr = document.getElementById('dateString').value;						
+			var convdate = convertISO8601toDate(dtstr);
+			document.getElementById('result').innerHTML = convdate; 
+		}
+
+		function convertISO8601toDate(dtstr){
+			dtstr = dtstr.replace(/\D/g, ' ');
+			//去掉末尾空白
+			dtstr = dtstr.replace(/\s+$/,'');
+			var dtcomps = dtstr.split(' ');
+			//未指定月份和日期的ISO 8601日期是不能转换的
+			if (dtcomps.length < 3) {return '无效日期';}
+			//如果没有提供时间，设置其为0
+			if (dtcomps.length < 4) {
+				dtcomps[3] = 0;
+				dtcomps[4] = 0;
+				dtcomps[5] = 0;
+			}
+			//ISO8601时间月份基于1开始到12   Date()时间月份基于0开始到11
+			dtcomps[1]--;
+			var convdt = new Date(Date.UTC.apply(null,dtcomps));
+			return convdt.toUTCString();
+		}
+	</script>
+</body>
+</html>
