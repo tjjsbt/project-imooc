@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Accessing number in table</title>
+	<style type="text/css">
+		table,tr,td{
+			border: 1px solid #ccc;
+		}
+	</style>
+</head>
+<body>
+	<table id="table1">
+		<tr>
+			<td>Washington</td><td>145</td>
+		</tr>
+		<tr>
+			<td>Oregon</td><td>233</td>
+		</tr>
+		<tr>
+			<td>Missouri</td><td>833</td>
+		</tr>		
+	</table>
+	<button id="btn">总和</button>
+	<script type="text/javascript">
+		document.getElementById("btn").onclick = function(){
+			add();
+		}
+		function add(){
+		var sum = 0;
+		//找到第二列中的所有单元格
+		var cells = document.querySelectorAll("td + td");
+
+		for(var i = 0; i < cells.length; i++)
+			sum += parseFloat(cells[i].firstChild.data);
+
+		var newRow = document.createElement("tr");
+		var firstCell = document.createElement("td");
+		var firstCellText = document.createTextNode("Sum:");
+		firstCell.appendChild(firstCellText);
+		newRow.appendChild(firstCell);
+
+		var secondCell = document.createElement("td");
+		var secondCellText = document.createTextNode(sum);
+		secondCell.appendChild(secondCellText);
+		newRow.appendChild(secondCell);
+
+		document.getElementById("table1").appendChild(newRow);
+		}
+	</script>
+</body>
+</html>
