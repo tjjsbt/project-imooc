@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>count down</title>
+</head>
+<body>
+<div>距离高考还有：<span id="show"></span></div>
+	<script type="text/javascript">
+		window.onload = function(){
+			var curtime = new Date();
+			var endtime = new Date('2017/6/6,12:30:00'); //结束时间
+			var lefttime = endtime.getTime() - curtime.getTime();
+			// console.log(lefttime);
+			var day = Math.ceil(lefttime/(1000*60*60*24));
+			if(day > 0){
+			document.getElementById('show').innerHTML = day + '天';
+			}
+		}
+		
+	</script>
+</body>
+</html>

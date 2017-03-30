@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>isXML</title>
+</head>
+<body>
+	<div id="test">isXML</div>
+	<!-- 这是一个注释节点 -->
+	<script type="text/javascript">
+		// var isXML = function(ele){
+		// 	var documentElement = ele && (ele.ownerDocument || ele).documentElement;
+		// 	return documentElement ? documentElement.nodeName !== "HTML" : false;
+		// }
+		// console.log(isXML(document.getElementById("test")));
+		// //上面的方法不严谨
+		// try{
+		// 	//创建XML文档测试
+		// 	var doc = document.implementation.createDocument(null, 'HTML', null);
+		// 	console.log(doc.documentElement);
+		// 	console.log(isXML(doc));
+		// }catch(e){
+		// 	console.log("不支持creatDocument方法");
+		// }
+
+		// var isXML = function(document){
+		// 	return (!!docuemnt.xmlVersion) || (!!document.xml) || (toString.call(document) == '[object XMLdocument]') || (document.nodeType == 9 && document.documentElement.nodeName != 'HTML');
+		// }
+		// //上例精简版
+		// var isXML = window.HTMLDocument ? function(doc){
+		// 	return !(doc instanceof HTMLDocument);
+		// } : function(doc){
+		// 	return "selectNodes" in doc;
+		// }
+
+		// 属性法容易被攻破  最好用功能法
+		var isXML = function(doc){
+			// 若要判断是不是HTML 将不等于改成等于就可以
+			return doc.createElement("p").nodeName !== doc.createElement("P").nodeName;
+		}
+		console.log(isHTML(document));
+	</script>
+</body>
+</html>

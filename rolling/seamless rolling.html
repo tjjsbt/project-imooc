@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Seamless rolling</title>
+    <style type="text/css">
+    h3,
+    div,
+    ul,
+    li {
+        margin: 0;
+        padding: 0;
+    }
+    
+    a {
+        color: #000;
+        text-decoration: none;
+    }
+    
+    ul li {
+        list-style: none;
+        text-align: center;
+    }
+    
+    #container {
+        margin: 50px auto 0;
+        width: 300px;
+        border: 2px solid #ccc;
+        border-radius: 5px;
+    }
+    
+    h3 {
+        background: red;
+        color: #fff;
+        text-align: center;
+        margin-bottom: 2px;
+        border-radius: 5px;
+    }
+    
+    #moocBox {
+        height: 130px;
+        overflow: hidden;
+        /*  这个一定要加，超出的内容部分要隐藏，免得撑高中间部分 */
+    }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <h3 id="moocTitle">菜单</h3>
+        <div id="moocBox">
+            <ul id="con1">
+                <li><a href="">1.鱼香肉丝</a></li>
+                <li><a href="">2.红烧茄子</a></li>
+                <li><a href="">3.孜然炒肉</a></li>
+                <li><a href="">4.水煮肉片</a></li>
+                <li><a href="">5.酸辣土豆丝</a></li>
+                <li><a href="">6.手撕包菜</a></li>
+                <li><a href="">7.干煸豆角</a></li>
+                <li><a href="">8.糖醋排骨</a></li>
+                <li><a href="">9.宫保鸡丁</a></li>
+            </ul>
+            <ul id="con2"></ul>
+        </div>
+    </div>
+    <script type="text/javascript">
+    var area = document.getElementById('moocBox');
+    var con1 = document.getElementById('con1');
+    var con2 = document.getElementById('con2');
+    area.scrollTop = 0;
+    //将con1的内容复制给con2
+    con2.innerHTML = con1.innerHTML;
+    var speed = 50;
+    function scrollUP() {
+        // 当con1完全滚动出容器时，将con1复位
+        if (area.scrollTop >= con1.offsetHeight) {
+            area.scrollTop = 0;
+        } else {
+            area.scrollTop++;
+        }
+    }
+    //setInterval 每次返回的id值是变动的 所以要赋值给变量    
+    var myScroll = setInterval(scrollUP, speed);
+    area.onmouseover = function(){
+    	clearInterval(myScroll);
+    }
+    area.onmouseout = function(){
+    	myScroll = setInterval(scrollUP, speed);
+    }
+    </script>
+</body>
+
+</html>

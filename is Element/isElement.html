@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>isElement</title>
+</head>
+<body>
+	<div id="test">aaa</div>
+	<!-- 这是一个注释节点 -->
+	<script type="text/javascript">
+		var testDiv = document.createElement('div');
+		var isElement = function(obj){
+			
+			if (obj && obj.nodeType === 1) {
+				//IE9 obj是否是Node的一个实例
+				if( window.Node && (obj instanceof Node)){
+					return true;
+				}
+				try{
+					//如果这两个节点操作发生错误则他不是元素节点
+					testDiv.appendChild(obj);
+					testDiv.removeChild(obj);
+				}catch(e){
+					return false;
+				}
+				return true;
+			}
+			return false;
+		}
+		var a = {
+			nodeType: 1
+		}
+
+		var isXML = function(doc){
+			return doc.createElement("p").nodeName !== doc.createElement("P").nodeName;
+		}
+
+		var isHTMLElement = function(el){
+			if(isElement(el)){
+				return isXML(el.ownerDocument);
+			}
+			return false;
+		}
+	</script>
+</body>
+</html>

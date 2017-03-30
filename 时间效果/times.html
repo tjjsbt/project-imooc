@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>simple timer</title>
+</head>
+
+<body>
+    <div id="show"></div>
+    <script type="text/javascript">
+    window.onload = function() {
+        showTime();
+    }
+
+    function checkTime(i){
+    	if(i < 10){
+    		i = '0' + i;
+    	}
+    	return i;
+    }
+
+    function showTime() {
+        var myDate = new Date();
+        var year = myDate.getFullYear();
+        var month = myDate.getMonth() + 1;
+        var date = myDate.getDate();
+        var day = myDate.getDay();
+        var weekDay = ["星期日", '星期一', '星期二', "星期三", "星期四", "星期五", "星期六"];
+        var h = myDate.getHours();
+        var m = myDate.getMinutes();
+        var s = myDate.getSeconds();
+        m = checkTime(m);
+        s = checkTime(s);
+        document.getElementById('show').innerHTML = year + '年' + month + '月' + date + '日 ' + weekDay[day] + ' ' + h + ':' + m + ':' + s;
+        setTimeout(showTime, 1000);
+    }
+    </script>
+</body>
+
+</html>

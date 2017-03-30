@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>count down 2</title>
+</head>
+<body>	
+<div>抢购还剩：<span id="lefttime"></span></div>
+	<script type="text/javascript">
+		
+		window.onload = function(){
+			showTime();
+		}
+		function showTime(){
+			var curtime = new Date();
+			var endtime = new Date('2017/6/6,12:30:00');  //结束时间
+			var lefttime = parseInt((endtime.getTime() - curtime.getTime())/1000);
+			var d = parseInt(lefttime/(24*60*60));
+			var h = parseInt(lefttime/(60*60)%24);
+			var m = parseInt(lefttime/60%60 );
+			var s = parseInt(lefttime%60);
+			console.log(s);			
+			document.getElementById('lefttime').innerHTML = ' ' + d + '天 ' + h + '小时 ' + m + '分 ' + s + '秒 '; 
+			var t = setTimeout(showTime, 1000);	
+			if (lefttime <= 0) {
+				document.getElementById('lefttime').innerHTML = '团购结束!'; 
+				clearTimeout(t);
+			}
+					
+		}
+	</script>
+</body>
+</html>
