@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>JD Category Navigation(use CSS)</title>
+    <style type="text/css">
+    body {
+        padding: 0;
+        font-size: 10px;
+        behavior: url(css/csshover.htc);
+        /*csshover.htc文件可以解决ie6下hover不起作用的兼容问题。百度下载*/
+    }
+    
+    ul li {
+        list-style: none;
+    }
+    
+    .topmenu {
+        display: block;
+        width: 220px;
+        border: 2px solid #e4393c;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .toptitle {
+        height: 40px;
+        line-height: 40px;
+        text-align: left;
+        font-size: 11pt;
+        font-weight: bold;
+        color: #fff;
+        background: #e4393c;
+        padding-left: 20px;
+    }
+    
+    .topmenu li {
+        height: 30px;
+        line-height: 30px;
+        font-size: 11pt;
+        text-align: left;
+        padding-left: 8px;
+        z-index: 3;
+        /*悬浮层位于li上*/
+        background: url(images/pointer.jpg) right no-repeat;
+    }
+    /*鼠标移动到上面显示的样式*/
+    .topmenu .lihover {
+        background-image: none;
+        border: 1px solid #ddd;
+        border-right: 0;
+        box-shadow: 0 0 8px #ddd;
+        /*box-shadow: h-shadow v-shadow blur spread color inset(内阴影);*/
+        -moz-box-shadow: 0 0 8px #ddd;
+        -webkit-box-shadow: 0 0 8px #ddd;
+        /*设置高给一级菜单下的小菜单位置*/
+        height: 60px;
+        border-left: 4px solid #e4393c;
+    }
+	/*悬浮层*/
+    .topmenu .lihover .submenu {
+        display: block;
+    }
+    /*遮挡边线的小白方块*/
+    .topmenu .lihover span {
+        background: #fff;
+        display: inline-block;
+        z-index: 20;
+        width: 20px;
+        height: 60px;     /*height: 30px; ==>60px  一级菜单下的小菜单也增加遮挡效果*/
+        float: right;
+        position: relative;
+    }
+	/*添加一级菜单下的小菜单*/
+    .topmenu .lihover b {
+    	display: block;
+    	height: 30px;
+    	line-height: 30px;
+    	font-weight: normal;
+    	font-size: 10pt;
+    }
+    
+    .topmenu li a {
+        text-decoration: none;
+        color: #313131;
+    }
+    
+    .topmenu li a:hover {
+        text-decoration: underline;
+        font-weight: bold;
+        color: #e4393c;
+    }
+    
+    .submenu {
+        display: none;
+        position: absolute;
+        width: 715px;
+        left: 220px;
+        top: 40px;
+        border: 1px solid #ddd;
+        z-index: 4;
+        background: #fff;
+        box-shadow: 0 0 8px #ddd;
+        /*box-shadow: h-shadow v-shadow blur spread color inset(内阴影);*/
+        -moz-box-shadow: 0 0 8px #ddd;
+        --webkit-box-shadow: 0 0 8px #ddd;
+    }
+    
+    .leftdiv {
+        float: left;
+        width: 490px;
+        margin: 5px;
+    }
+    
+    .rightdiv {
+        float: left;
+        width: 200px;
+        margin: 5px;
+    }
+    
+    
+    
+    .leftdiv dl {
+        display: block;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 6px;
+        overflow: hidden;
+    }
+    
+    .leftdiv dl dt {
+        display: block;
+        float: left;
+        width: 60px;
+        text-align: right;
+        height: 22px;
+        line-height: 22px;
+        padding-right: 6px;
+    }
+    
+    .leftdiv dl dt a {
+        color: #e4393c;
+        font-weight: bold;
+        text-decoration: underline;
+        font-size: 10pt;
+    }
+    
+    .leftdiv dl dd {
+        display: block;
+        overflow: hidden;
+    }
+    
+    .leftdiv dl dd a {
+        display: block;
+        float: left;
+        border-left: 1px solid #ccc;
+        color: #737373;
+        font-size: 9pt;
+        padding: 0 8px;
+        height: 14px;
+        line-height: 14px;
+        margin: 4px 0;
+    }
+    
+    .rightdiv dl dd {
+        margin: 3px 0;
+    }
+    
+    .rightdiv dl dt {
+        color: #e4393c;
+        font-weight: bold;
+        font-size: 10pt;
+    }
+    
+    .rightdiv dl dd a {
+        font-size: 9pt;
+        color: #737373;
+        line-height: 22px;
+    }
+    
+    .rightdiv dl dd a:hover {
+        color: #737373;
+        font-weight: normal;
+    }
+
+    .topmenu li b {
+    	display: none;
+    }
+
+    .rightPic{
+    	position: relative;
+    	right: -35px;
+    	bottom: -20px;
+    }
+    </style>
+</head>
+
+<body>
+    <ul class="topmenu">
+        <div class="toptitle">
+            全部商品分类
+        </div>
+        <li><a href="">图书、音响、数字产品</a><span></span><!-- span标签做一个白色小格子视觉连接悬浮块 -->
+            <b><a href="">免费</a> <a href="">小说</a> <a href="">励志与成功</a></b><!-- 用b标签做一个鼠标划过li 下面增加的小菜单 -->
+            
+
+            <div class="submenu">
+                <div class="leftdiv">
+                    <dl>
+                        <dt><a href="">电子书</a></dt>
+                        <dd>
+                            <a href="">免费</a> <a href="">小说</a> <a href="">励志与成功</a> <a href="">婚恋/两性</a> <a href="">文学</a> <a href="">经管</a> <a href="">畅读VIP</a>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><a href="">数字音乐</a></dt>
+                        <dd>
+                            <a href="">通俗流行</a> <a href="">古典音乐</a> <a href="">摇滚说唱</a> <a href="">爵士蓝调</a> <a href="">乡村民谣</a> <a href="">有声读物</a>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><a href="">音像</a></dt>
+                        <dd>
+                            <a href="">音乐</a> <a href="">影视</a> <a href="">教育音像</a> <a href="">游戏</a>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><a href="">文艺</a></dt>
+                        <dd>
+                            <a href="">小说</a> <a href="">文学</a> <a href="">青春文艺</a> <a href="">传记</a> <a href="">艺术</a>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><a href="">人文社科</a></dt>
+                        <dd>
+                            <a href="">历史</a> <a href="">心理学</a> <a href="">政治军事</a> <a href="">国学/古籍</a> <a href="">哲学/宗教</a> <a href="">社会学科</a>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><a href="">经营励志</a></dt>
+                        <dd>
+                            <a href="">经济</a> <a href="">金融与投资</a> <a href="">管理</a> <a href="">励志与成功</a>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><a href="">生活</a></dt>
+                        <dd>
+                            <a href="">家教与育儿</a> <a href="">旅游/地图</a> <a href="">烹饪/美食</a> <a href="">时尚/美妆</a> <a href="">家居</a> <a href="">婚恋与两性</a> <a href="">娱乐/休闲</a> <a href="">健身与保养</a> <a href="">动漫/幽默</a> <a href="">体育/运动</a>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><a href="">科技</a></dt>
+                        <dd>
+                            <a href="">科普</a> <a href="">IT</a> <a href="">建筑</a> <a href="">医学</a> <a href="">工业技术</a> <a href="">电子/通信</a> <a href="">农林</a> <a href="">科学与自然</a>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><a href="">少儿</a></dt>
+                        <dd>
+                            <a href="">少儿</a> <a href="">0-2岁</a> <a href="">3-6岁</a> <a href="">7-10岁</a> <a href="">11-14岁</a>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><a href="">教育</a></dt>
+                        <dd>
+                            <a href="">教材</a> <a href="">中小学辅导</a> <a href="">考试</a> <a href="">婚恋/两性</a> <a href="">外语学习</a>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><a href="">其它</a></dt>
+                        <dd>
+                            <a href="">英文原版书</a> <a href="">港台图书</a> <a href="">工具书</a> <a href="">套装书</a> <a href="">杂志/期刊</a>
+                        </dd>
+                    </dl>
+                </div>
+                <div class="rightdiv">
+                    <dl>
+                        <dd>
+                            <a href=""><img src="images/pic1.png" width="194" height="70"></a>
+                        </dd>
+                        <dd>
+                            <a href=""><img src="images/pic2.png" width="194" height="70"></a>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>推荐品牌</dt>
+                        <dd>
+                            <a href="">美的官方旗舰店</a>
+                        </dd>
+                        <dd>
+                            <a href="">苏泊尔旗舰店</a>
+                        </dd>
+                        <dd>
+                            <a href="">九阳旗舰店</a>
+                        </dd>
+                        <dd>
+                            <a href="">东菱旗舰店</a>
+                        </dd>
+                        <dd>
+                            <a href="">海尔统帅旗舰店</a>
+                        </dd>
+                        <dd>
+                            <a href="">小熊旗舰店</a>
+                        </dd>
+                    </dl>
+
+					<img src="images/wii.png" class="rightPic">
+
+                </div>
+            </div>
+        </li>
+        <li><a href="">家用电器</a><span></span>
+        </li>
+        <li><a href="">手机、数码</a><span></span>
+        </li>
+        <li><a href="">电脑、办公</a><span></span>
+        </li>
+        <li><a href="">家居、家具、家装、厨具</a><span></span>
+        </li>
+        <li><a href="">服饰内衣、珠宝首饰</a><span></span>
+        </li>
+        <li><a href="">个护化妆</a><span></span>
+        	 <div class="submenu">
+                <div class="leftdiv">
+                    <dl>
+                        <dt><a href="">电子书</a></dt>
+                        <dd>
+                            <a href="">免费</a> <a href="">小说</a> <a href="">励志与成功</a> <a href="">婚恋/两性</a> <a href="">文学</a> <a href="">经管</a> <a href="">畅读VIP</a>
+                        </dd>
+                    </dl>
+                    <!-- <dl>
+                        <dt><a href="">数字音乐</a></dt>
+                        <dd>
+                            <a href="">通俗流行</a> <a href="">古典音乐</a> <a href="">摇滚说唱</a> <a href="">爵士蓝调</a> <a href="">乡村民谣</a> <a href="">有声读物</a>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><a href="">音像</a></dt>
+                        <dd>
+                            <a href="">音乐</a> <a href="">影视</a> <a href="">教育音像</a> <a href="">游戏</a>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><a href="">文艺</a></dt>
+                        <dd>
+                            <a href="">小说</a> <a href="">文学</a> <a href="">青春文艺</a> <a href="">传记</a> <a href="">艺术</a>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><a href="">人文社科</a></dt>
+                        <dd>
+                            <a href="">历史</a> <a href="">心理学</a> <a href="">政治军事</a> <a href="">国学/古籍</a> <a href="">哲学/宗教</a> <a href="">社会学科</a>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><a href="">经营励志</a></dt>
+                        <dd>
+                            <a href="">经济</a> <a href="">金融与投资</a> <a href="">管理</a> <a href="">励志与成功</a>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><a href="">生活</a></dt>
+                        <dd>
+                            <a href="">家教与育儿</a> <a href="">旅游/地图</a> <a href="">烹饪/美食</a> <a href="">时尚/美妆</a> <a href="">家居</a> <a href="">婚恋与两性</a> <a href="">娱乐/休闲</a> <a href="">健身与保养</a> <a href="">动漫/幽默</a> <a href="">体育/运动</a>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><a href="">科技</a></dt>
+                        <dd>
+                            <a href="">科普</a> <a href="">IT</a> <a href="">建筑</a> <a href="">医学</a> <a href="">工业技术</a> <a href="">电子/通信</a> <a href="">农林</a> <a href="">科学与自然</a>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><a href="">少儿</a></dt>
+                        <dd>
+                            <a href="">少儿</a> <a href="">0-2岁</a> <a href="">3-6岁</a> <a href="">7-10岁</a> <a href="">11-14岁</a>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><a href="">教育</a></dt>
+                        <dd>
+                            <a href="">教材</a> <a href="">中小学辅导</a> <a href="">考试</a> <a href="">婚恋/两性</a> <a href="">外语学习</a>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><a href="">其它</a></dt>
+                        <dd>
+                            <a href="">英文原版书</a> <a href="">港台图书</a> <a href="">工具书</a> <a href="">套装书</a> <a href="">杂志/期刊</a>
+                        </dd>
+                    </dl>
+                </div>
+                <div class="rightdiv">
+                    <dl>
+                        <dd>
+                            <a href=""><img src="images/pic1.png" width="194" height="70"></a>
+                        </dd>
+                        <dd>
+                            <a href=""><img src="images/pic2.png" width="194" height="70"></a>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>推荐品牌</dt>
+                        <dd>
+                            <a href="">美的官方旗舰店</a>
+                        </dd>
+                        <dd>
+                            <a href="">苏泊尔旗舰店</a>
+                        </dd>
+                        <dd>
+                            <a href="">九阳旗舰店</a>
+                        </dd>
+                        <dd>
+                            <a href="">东菱旗舰店</a>
+                        </dd>
+                        <dd>
+                            <a href="">海尔统帅旗舰店</a>
+                        </dd>
+                        <dd>
+                            <a href="">小熊旗舰店</a>
+                        </dd>
+                    </dl>
+                </div> -->
+            </div>
+        </li>
+        <li><a href="">鞋靴、箱包、钟表、奢侈品</a><span></span>
+        </li>
+        <li><a href="">运动户外</a><span></span>
+        </li>
+        <li><a href="">汽车用品</a><span></span>
+        </li>
+        <li><a href="">母婴、玩具乐器</a><span></span>
+        </li>
+        <li><a href="">食品饮料、酒类、生鲜</a><span></span>
+        </li>
+        <li><a href="">营养保健</a><span></span>
+        </li>
+        <li><a href="">彩票、旅行、充值、票务</a><span></span>
+        </li>
+    </ul>
+
+    <script type="text/javascript">
+    	window.onload = function(){
+    		var Lis = document.getElementsByTagName('li');
+    		for(var i= 0; i < Lis.length; i++){
+    			Lis[i].i = i;   //for 循环只保存最后一个i
+    			Lis[i].onmouseover = function(){ 
+    			// 动态添加css   				
+    				this.className = 'lihover';
+    				// 优化 当悬浮层内容过少 也就是悬浮窗底部的高度比一级菜单顶部的高度小的时候 出现内容脱离的情况  每个li的高度是30px 全部商品分类高度是42px
+    				//当前li顶边离窗口顶边的高度
+    				var h0 = (this.i-1)*30 + 42; //用this.i 引用i的值
+    				// this 指向li标签 li标签下第一个div就是悬浮窗 top属性得到他顶边离显示窗口的距离加上悬浮层自身的高度就是他底边的高度
+    				//悬浮层自身高度
+    				var y = this.getElementsByTagName('div')[0].offsetHeight;
+    				var h = this.getElementsByTagName('div')[0].style.top + y;
+
+    				if (h < h0) {
+    					this.getElementsByTagName('div')[0].style.top = h0 + 'px';
+    				}
+    				// 如果窗口过小 悬浮窗内容又过多的时候 导致部分内容无法显示到 将悬浮窗上移
+    				if(y > 550){
+    					this.getElementsByTagName('div')[0].style.top = '3px';
+    				}
+
+    			}
+
+    			Lis[i].onmouseout = function(){
+    				this.className = '';
+    			}
+    		}
+    	}
+    </script>
+</body>
+
+</html>

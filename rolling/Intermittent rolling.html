@@ -20,12 +20,16 @@
     
     ul li {
         list-style: none;
-        text-align: center;
+        padding-left: 8px;
+        padding-right: 8px;        
         height: 24px;          /*设置li高度*/
+    }
+    ul li span{    	
+    	float: right;
     }
     
     #container {
-        margin: 50px auto 0;
+        margin: 100px auto 0;
         width: 300px;
         border: 2px solid #ccc;
         border-radius: 5px;
@@ -51,16 +55,16 @@
     <div id="container">
         <h3 id="moocTitle">菜单</h3>
         <div id="moocBox">
-            <ul id="con1">
-                <li><a href="">1.鱼香肉丝</a></li>
-                <li><a href="">2.红烧茄子</a></li>
-                <li><a href="">3.孜然炒肉</a></li>
-                <li><a href="">4.水煮肉片</a></li>
-                <li><a href="">5.酸辣土豆丝</a></li>
-                <li><a href="">6.手撕包菜</a></li>
-                <li><a href="">7.干煸豆角</a></li>
-                <li><a href="">8.糖醋排骨</a></li>
-                <li><a href="">9.宫保鸡丁</a></li>
+            <ul>
+                <li><a href="">1.鱼香肉丝</a><span>15元</span></li>
+                <li><a href="">2.红烧茄子</a><span>12元</span></li>
+                <li><a href="">3.孜然炒肉</a><span>18元</span></li>
+                <li><a href="">4.水煮肉片</a><span>22元</span></li>
+                <li><a href="">5.酸辣土豆</a><span>10元</span></li>
+                <li><a href="">6.手撕包菜</a><span>9元</span></li>
+                <li><a href="">7.干煸豆角</a><span>11元</span></li>
+                <li><a href="">8.糖醋排骨</a><span>20元</span></li>
+                <li><a href="">9.宫保鸡丁</a><span>18元</span></li>
             </ul>
         </div>
     </div>
@@ -69,8 +73,8 @@
     var liHeight = 24;  //li的高度设置为24  如果想两行一停改为48即可
     area.innerHTML += area.innerHTML;  //复制一个自身
     area.scrollTop = 0;
-    var speed = 20;
-    var delay = 500;
+    var speed = 50;
+    var delay = 1000;
     var timer;
     function startMove(){
     	area.scrollTop++;
@@ -83,7 +87,7 @@
     		setTimeout(startMove, delay);
     	}else{
     		area.scrollTop++;
-    		//无缝循环 当他滚动到他滋生的高度时 将他复位 因为之前复制了自身所以除2
+    		//无缝循环 当他滚动到他自身的高度时 将他复位 因为之前复制了自身所以除2
     		if (area.scrollTop >= area.scrollHeight/2) {
     			area.scrollTop = 0;
     		}
