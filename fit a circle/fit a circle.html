@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>将一个svg圆放到div中</title>
+	<style type="text/css">
+		#ele{
+			width: 600px;
+			height: 400px;
+			border: 1px solid #000;
+		}
+	</style>
+</head>
+<body>
+	<div id="ele">
+		<svg width='100%' height='100%'>
+		<!-- cx 和 cy 属性定义圆点的 x 和 y 坐标。如果省略 cx 和 cy，圆的中心会被设置为 (0, 0) -->
+			<circle	id='circ' stroke="black" stroke-width="2" fill='red' />
+			
+		</svg>
+	</div>
+	<script type="text/javascript">
+		window.onload = function(){
+			var box = document.getElementById('ele');
+			//获得CSSStyleDeclaration对象
+			// Window.getComputedStyle() 方法会在一个元素应用完有效样式且计算完所有属性的基本值之后给出所有 CSS 属性的值。pseudoElt 可选指定一个要匹配的伪元素的字符串。必须对普通元素省略（或null）。
+			let style = window.getComputedStyle(element, [pseudoElt]);
+			var style = window.getComputedStyle(box, null);
+			console.log(style.getPropertyValue('height'))
+			// 获得元素的宽和高
+			var height = parseInt(style.getPropertyValue('height'));
+			var width = parseInt(style.getPropertyValue('width'));
+			// 圆心坐标
+			var x = width/2;
+			var y = height/2;
+			console.log(x,y);
+			//圆的半径
+			var circleRadius = Math.min(width, height)/2;
+			console.log(circleRadius);
+			var circ = document.getElementById('circ');
+			circ.setAttribute('r', circleRadius);
+			circ.setAttribute('cx', x);
+			circ.setAttribute('cy', y);
+		}
+	</script>
+</body>
+</html>
