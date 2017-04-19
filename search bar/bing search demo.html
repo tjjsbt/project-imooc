@@ -50,17 +50,68 @@
 			top: 30%;
 			left: 25%;
 		}
+		.suggest{
+			width: 388px;
+			background-color: #fff;
+			border: 1px solid #999;
+		}
+		.suggest ul {
+			list-style: none;
+			margin:0;
+			padding:0;
+			 text-indent: 1em;
+		}
+		.suggest ul li{
+			padding: 3px;
+			font-size: 14px;
+			line-height: 14px;
+			cursor: pointer;
+		}
+		.suggest ul li:hover{
+			text-decoration: underline;
+			background-color: #e5e5e5;
+		}
 	</style>
 </head>
 <body>
 	<div class="bg-div">
 		<div class="search-box">
 		<div class="logo"></div>
-		<form>
-			<input type="text" class="search-input-text">
+		<form class="search-form" action="https://cn.bing.com/search" target="_blank" id="search-form">
+			<input type="text" class="search-input-text" name="q" id="search_input" autocomplete="off">
 			<input type="submit" class="search-input-button" value="">
 		</form>
 		</div>
 	</div>
+
+	<div class="suggest" id="search-suggest" style="display: none;">
+		<ul id="search-result">
+			<li>搜索结果1</li>
+			<li>搜索结果2</li>
+		</ul>
+	</div>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript">
+		$('#search_input').bind('keyup',function(){
+			var searchText = $('#search_input').val();
+			// 向服务器发送AJAX请求
+			$.get('http://api.bing.com/qsonhs.aspx?q='+searchText, function(d){
+				var d = d.AS.Results[0].Suggest;
+				var html = '';
+				for(var i = 0; i < d.length; i++){
+					html += '<li>' + d[i].Txt + '</li>';
+				}
+				$('#search-result').html(html);
+				
+				$('#search-suggest').show().css({
+				// 绝对定位悬浮窗 表单距离顶部的高度加他自身的高度 手动加10调整位置
+				top: $('#search-form').offset().top + $('#search-form').height()+ 10,
+				left: $('#search-form').offset().left,
+				position: 'absolute',
+			});
+			},'json');			
+
+		})
+	</script>
 </body>
 </html>

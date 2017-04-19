@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>删除或替换数组元素</title>
+</head>
+<body>
+	<script type="text/javascript">
+		var arr = ['a','b','c','d','e','f'];
+		arr.splice(arr.indexOf('d'),1);
+		console.log(arr);   //==>  ['a','b','c','e','f']
+		arr.splice(arr.indexOf('e'),1,'X','O');
+		console.log(arr);   //=>	["a", "b", "c", "X", "O", "f"]
+
+		var char = ['ac','bb','bc','cd','ac','cc','dd','ac'];
+
+		while(char.indexOf('ac') != -1){
+			char.splice(char.indexOf('ac'),1,'**');
+		}
+		console.log(char);   //=> ["**", "bb", "bc", "cd", "**", "cc", "dd", "**"]
+
+		while(char.indexOf('**') != -1){
+			char.splice(char.indexOf('**'),1);
+		}
+		console.log(char);   //=> ["bb", "bc", "cd", "cc", "dd"]  
+
+	</script>
+</body>
+</html>

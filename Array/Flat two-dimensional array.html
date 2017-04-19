@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>扁平化二维数组</title>
+</head>
+<body>
+	<script type="text/javascript">
+		var arr = [];
+		arr[0] = [1,2,3];
+		arr[1] = [4,5,6];
+		arr[2] = [7,8,9];
+		arr[3] = [10,11,12];
+		//扁平化数组
+		var newArr = arr.concat.apply([],arr);
+		console.log(newArr);
+	</script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>提取数组一部分</title>
+</head>
+<body>
+	<script type="text/javascript">
+		var arrA = [];
+		arrA[0] = ['a','b'];
+		arrA[1] = ['c','d'];
+		arrA[2] = ['e','f'];
+		//slice()方法浅拷贝，数组元素是对象的话(即值是按照引用（by reference）来复制的)，两个数组都指向想通的对象
+		//数组元素是基本数据类型的话(即值是按照引用（by value）来复制的)
+		var arrB = arrA.slice(1,2);
+		console.log(arrB);
+		console.log(arrA[1]);		//=> ['c','d']
+
+		arrB[0][0] = "X";
+		console.log(arrB[0]);		//=> ["X", "d"]
+		console.log(arrA[1]);		//=>  ["X", "d"]
+
+	</script>
+</body>
+</html>

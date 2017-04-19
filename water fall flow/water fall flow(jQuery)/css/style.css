@@ -1,0 +1,26 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+
+#main{
+	position: relative;
+}
+/*js需要调用offset方法获得图片框内的高度，这个方法不能得到margin的高度所以使用padding
+*/
+.box{
+	padding: 15px 0 0 15px;
+	float: left;
+}
+
+.pic{
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	box-shadow: 0 0 5px #ccc;
+}
+
+.pic img{
+	width: 260px;
+	height: auto;
+}
