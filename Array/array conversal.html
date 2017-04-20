@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Array conversal</title>
+</head>
+
+<body>
+    <table border="1">
+        <tr>
+            <th>Month</th>
+            <th>Savings</th>
+        </tr>
+        <tr>
+            <td>January</td>
+            <td>$100</td>
+        </tr>
+        <tr>
+            <td>Feb</td>
+            <td>$200</td>
+        </tr>
+        <tr>
+    </table>
+    <script type="text/javascript">
+    var arr = ['ab', 'bc', 'cd', 'ab', 'dj', 'ab'];
+    arr.forEach(function(element, index, arr) {
+        //如果该元素的值为ab，就会执行第二组括号中的赋值。也可以用if条件句写。
+        (element == 'ab') && (arr[index] = '**');
+    });
+    console.log(arr);
+    </script>
+    <script type="text/javascript">
+    // querySelectorAll("td + td")返回一个nodeList
+    var cells = document.querySelectorAll("td + td");
+    var sum = '';
+    //forEach()是一个Array方法，没有返回值。为了让他和nodeList一起使用，在空数组上调用他，然后在该对象上使用call(),从而在nodeList上模拟了一个Array的效果
+    [].forEach.call(cells, function(cell) {
+        sum += cell.firstChild.data;
+    });
+    console.log(sum);
+    </script>
+    <script type="text/javascript">
+    	var decArr = [23,255,122,5,16,99];
+    	// map()方法有返回值
+    	var hexArr = decArr.map(function(ele){
+    		return ele.toString(16);
+    	})
+    	console.log(hexArr);
+    </script>
+
+    <script type="text/javascript">
+    	var arr = ["**", "bc", "cd", "**", "dj", "**"];
+    	// filter()方法返回一个布尔值
+    	var newArr = arr.filter(function(ele){
+    		return ele !== '**';
+    	});
+    	console.log(newArr);
+    </script>
+    <script type="text/javascript">
+    	function testValue(ele,index,arr){
+    		var reg = /^[a-zA-Z]+$/;
+    		return reg.test(ele);
+    	}
+    	//every()
+    	var eles = ['**','abc',123,'-','45','AfB'];
+    	var result = eles.every(testValue);
+    	console.log(result);
+    	var eles2 = ['apple','Lion','dog','cat'];
+    	var result2 = eles2.every(testValue);
+    	console.log(result2);
+    	//some()
+    	var result3 = eles.some(testValue);
+    	console.log(result3);
+    </script>
+</body>
+
+</html>
