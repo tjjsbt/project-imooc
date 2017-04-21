@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>opacity</title>
+    <style type="text/css">
+    body,
+    div {
+        margin: 0;
+        padding: 0;
+    }
+    
+    #div1 {
+        width: 200px;
+        height: 200px;
+        background: #999;
+        opacity: 0.3;
+        filter: alpha(opacity: 30);
+        /*IE8 以及更早的版本支持替代的 filter 属性。*/
+    }
+    </style>
+</head>
+
+<body>
+	<!-- 鼠标移入透明度100，鼠标移出透明度30 -->
+    <div id="div1"></div>
+    <script type="text/javascript">
+    	window.onload = function(){
+    		var oDiv = document.getElementById('div1');
+    		oDiv.onmouseover = function(){
+    			startMove(100);
+    		}
+    		oDiv.onmouseout = function(){
+    			startMove(30);
+    		}
+    	}
+    	var timer = null;
+    	//不像左右移动可以改变offsetLeft值 没有直接属性可以改变所以定义一个变量，然后将他赋值给要改变的属性
+    	var alpha = 30;
+    	function startMove(iTarget){
+    		var oDiv = document.getElementById('div1');
+    		//防止定时器叠加问题先关闭
+    		clearInterval(timer);
+    		timer = setInterval(function(){
+    			var speed = 0;
+    			if(alpha > iTarget){
+    				speed = -10;
+    			}else{
+    				speed = 10;
+    			}
+    			if(alpha == iTarget){
+    				clearInterval(timer);
+    			}else{
+    				alpha += speed;
+    				oDiv.style.filter = 'alpha(opactiy:'+alpha+')';
+    				oDiv.style.opacity = alpha/100;
+    			}
+    		}, 30)
+    	}
+    </script>
+</body>
+
+</html>

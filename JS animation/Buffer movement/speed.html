@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Buffer movement</title>
+	<style type="text/css">
+		body, div, span{
+			margin: 0;
+			padding: 0;
+		}
+		#div1{
+			width: 200px;
+			height: 200px;
+			background: red;
+			position: relative;
+			left: -200px;
+			top: 0;
+		}
+		#div1 span{
+			width: 20px;
+			height: 50px;
+			background: #999;
+			position: absolute;
+			left: 200px;
+			top: 75px;
+		}
+	</style>
+</head>
+<body>
+	<div id="div1">
+		<span id="idshare">分享</span>
+	</div>
+	<script type="text/javascript">
+		window.onload = function(){
+			var oDiv = document.getElementById('div1');
+			oDiv.onmouseover = function(){
+				startMove(0);
+			}
+			oDiv.onmouseout = function(){
+				startMove(-200);
+			}
+		}
+
+		var timer = null;
+		function startMove(iTarget){
+			//防止mouseover事件不断触发定时器
+			clearInterval(timer);
+			var oDiv = document.getElementById('div1');
+			timer = setInterval(function(){	
+				// 用速度除以一个系数来达到缓冲运动,speed此时不为整数
+				var speed = (iTarget-oDiv.offsetLeft)/20;	
+				//对speed取整
+				speed = speed > 0 ? Math.ceil(speed):Math.floor(speed);			
+				if(oDiv.offsetLeft == iTarget){
+					clearInterval(timer);
+				}else{
+				oDiv.style.left = oDiv.offsetLeft + speed + 'px';
+				}
+			}, 30)	
+		}
+
+		
+	</script>
+</body>
+</html>
