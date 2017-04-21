@@ -7,6 +7,7 @@
 </head>
 
 <body>
+	<!-- 表格 -->
     <table border="1">
         <tr>
             <th>Month</th>
@@ -22,6 +23,20 @@
         </tr>
         <tr>
     </table>
+	<!-- 表单 -->
+	<form id="picker">
+		<label>Value 1:</label>
+		<input type="text" id="first" name=""><br/>
+		<label>Value 2:</label>
+		<input type="text" id="second" name=""><br/>
+		<label>Value 3:</label>
+		<input type="text" id="third" name=""><br/>
+		<label>Value 4:</label>
+		<input type="text" id="fourth" name=""><br/>
+		<button id="validate">Validate</button>
+	</form>
+	<div id="result"></div>
+
     <script type="text/javascript">
     var arr = ['ab', 'bc', 'cd', 'ab', 'dj', 'ab'];
     arr.forEach(function(element, index, arr) {
@@ -72,6 +87,65 @@
     	//some()
     	var result3 = eles.some(testValue);
     	console.log(result3);
+    </script>
+    <!-- 表单部分脚本 -->
+    <script type="text/javascript">
+    	//Associative Array
+    	// 使用一个关联数组储存表单元素的名和值，以便随后验证。
+    	/*var eleArray = new new Object();  //注意是Object 不是Array
+    	var ele = document.forms[0].elements[0];
+    	eleArray[ele.id] = ele.value;
+
+    	Object.keys(eleArray).forEach(function(key){
+    		var value = eleArray[key];
+    		console.log(value);
+    	});*/
+    	
+    	//使用表单元素展示关联数组
+    	//获取表单元素的名称和值以及验证
+    	document.getElementById('validate').addEventListener('click', function(e){
+    		e.preventDefault();
+    		//创建元素键/值对的数组
+    		var eles = document.getElementById('picker').elements;
+    		var eleArray = new Object();
+    		for (var i = 0; i < eles.length; i++) {
+    			if(eles[i].type == 'text'){
+    				eleArray[eles[i].id] = eles[i].value;
+    			}
+    		}
+
+    		var str = '';
+    		Object.keys(eleArray).forEach(function(key){
+    			var value = eleArray[key];
+    			str += key + '->' + value + '<br/>';
+    		});
+
+    		document.getElementById('result').innerHTML = str;
+    	}, false);
+    </script>
+    <script type="text/javascript">
+    	//dict 模式
+    	//创建一个空的原型对象，以避免已有的属性可能会搞乱应用程序，而不是创建一个标准对象
+        var newMap = {};                //等同于 Object.create(Object.prototype)
+        var key = 'toString';
+        console.log(key in newMap);     //=> ture
+        console.log(newMap[key]);       //=> function toString(){[native code]}
+
+        var secondMap = Object.create(null);	//创建一个空的原型对象
+        console.log(key in secondMap);  //=> false
+
+        secondMap[key] = 'something diff';
+        console.log(key in secondMap);  //=> ture
+        console.log(secondMap[key]);    //=>   'something diff'
+    </script>
+
+    <script type="text/javascript">
+    	//使用ES6解构赋值(destructuring assignment)简化代码
+    	//将数组元素的值一次性赋给多个变量
+    	var arr = [1,2,3,4,5];
+    	var [a,b,c,d,e,f] = arr;    // f是undefined
+    	console.log(b);
+
     </script>
 </body>
 
