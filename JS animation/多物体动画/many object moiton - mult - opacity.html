@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>多物体运动opacity</title>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		ul,li{
+			list-style-type: none;
+		}
+		ul li {
+			width: 200px;
+			height: 100px;
+			background: yellow;
+			margin-bottom: 20px;
+			opacity: 0.3;
+			filter:alpha(opacity:30);
+			border: 4px solid #000;
+		}
+	</style>
+</head>
+<body>
+	<ul>
+		<li id="li1"></li>		
+	</ul>
+	<!-- 鼠标移上li宽度变为400，移出宽度变为200。 -->
+	<script type="text/javascript">
+		window.onload = function(){
+			/*var aLi = document.getElementsByTagName('li');
+			for(var i = 0; i<aLi.length; i++){
+				// 由于定时器是公用的所以给每一个li定义一个timer
+				aLi[i].timer = null;
+				aLi[i].onmouseover = function(){
+					startMove(this,400);
+				}
+				aLi[i].onmouseout = function(){
+					startMove(this,200);
+				}
+			}*/
+			var li1 = document.getElementById('li1');
+			var li2 = document.getElementById('li2');
+			li1.onmouseover = function(){
+				startMove(this,'opacity',100);
+			}
+			li1.onmouseout = function(){
+				startMove(this,'opacity',30);
+			}
+		}
+		//封装函数获取样式 例如width 不包括border margin padding(只包括内容区域)
+		//getStyle 还可以改变font-size  border等值	
+		function getStyle(obj,attr){
+			if(obj.currentStyle){
+				return obj.currentStyle[attr];	//currentStyle 针对 IE浏览器
+			}else{
+				return getComputedStyle(obj, false)[attr];	//getComputedStyle 针对firefox浏览器
+			}
+		}
+		// var timer = null;
+		var alpha = 30;
+		function startMove(obj,attr,iTarget){
+			//所以clearInterval里的参数是obj.timer
+			clearInterval(obj.timer);
+			obj.timer = setInterval(function(){
+				var icur = 0;
+				if(attr == 'opacity'){
+					//乘以100以整数操作,在用Math.round去掉小数部分
+					icur = Math.round(parseFloat(getStyle(obj,attr))*100);
+				}else{
+					icur = parseInt(getStyle(obj, attr));
+				}				
+				var speed = (iTarget - icur)/8;
+				speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
+				if(icur == iTarget){
+					clearInterval(obj.timer);
+				}else{
+					if(attr == 'opacity'){
+						//针对ie
+						obj.style.filter = 'alpha(opacity:' + (icur + speed) + ')';
+						// 针对firefox/chrome浏览器
+						obj.style.opacity = (icur + speed)/100;
+					}else{
+						// obj.style.width = icur + speed + 'px';
+					obj.style[attr] = icur + speed + 'px';
+				}					
+				}
+			}, 30)
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>getStyle()</title>
+	<style type="text/css">
+		#div1{
+			height: 200px;
+			width: 200px;
+			background: #f00;
+			border: 4px solid #000;
+			margin: 5px;
+			padding: 2px;
+			font-size: 12px;
+			color: #ccc;
+		}
+	</style>
+</head>
+<body>
+	<div id="div1">hello world</div>
+	<script type="text/javascript">
+		//offsetWidth 获得的属性是包括border，padding的 但是不包括margin
+		window.onload = function(){
+			startMove();
+		}
+		function startMove(){
+			setInterval(function(){
+				var oDiv = document.getElementById('div1');
+				//console.log(oDiv.style.width);   会获取行内样式 不算border
+				// oDiv.style.width = parseInt(getStyle(oDiv,'width')) - 1 + 'px';
+				// oDiv.style.fontSize = parseInt(getStyle(oDiv,'fontSize')) + 1 + 'px';
+			}, 30)
+		}
+		//封装函数获取样式 例如width 不包括border margin padding(只包括内容区域)
+		//getStyle 还可以改变font-size  border等值		
+		function getStyle(obj,attr){
+			if(obj.currentStyle){
+				return obj.currentStyle[attr];	//currentStyle 针对 IE浏览器
+			}else{
+				return getComputedStyle(obj, false)[attr];	//getComputedStyle 针对firefox浏览器
+			}
+		}
+	</script>
+</body>
+</html>
