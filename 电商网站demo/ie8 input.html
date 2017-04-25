@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Busy - 电商</title>
+<style>
+
+    /*
+    任务：
+    1 input需要清掉哪些默认样式，和兼容问题如何解决？
+    2 如何解决IE8一下的input框文字偏上问题
+     */
+ input{
+        background:none;
+        outline:none;
+        border:0px;
+    }
+    .search_box{
+        width:210px;
+    }
+    .search_input{
+        height:30px;
+        padding:0 5px;
+        line-height:30px\9;
+        width:136px;
+        border:2px solid #FF8C00;
+        float:left;
+    }
+    .search_btn{
+        width:60px;
+        height:34px;
+        color:#FFF;
+        background-color:#FF8C00;
+    }
+
+</style>
+</head>
+
+<body>
+    <div class="search_box">
+        <input type="text" class="search_input">
+        <input type="button" class="search_btn" value="搜索">
+    </div>
+</body>
+</html>
