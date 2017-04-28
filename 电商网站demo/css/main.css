@@ -946,5 +946,105 @@
 	padding-left: 10px;
 }
 
+/*商品介绍*/
+.grey{
+	background-color: #f0f0f0;
+}
+/*位置*/
+.userPosition{
+	font-size: 0;         /*内联元素过多导致文字间距大，解决办法如左侧*/
+	font-family: Verdana;
+	margin-top: 25px;
+	margin-bottom: 15px;
+}
+.userPosition em,
+.userPosition strong,
+.userPosition span,
+.userPosition a{
+	font-size: 12px;			/*内联元素过多导致文字间距大，解决办法如左侧*/
+}
+.userPosition em{
+	font-style: normal;
+}
+.userPosition a:hover{
+	text-decoration: none;
+}
+.description_info{
+	background-color: #fff;
+}
+.description{
+	border:1px solid #ccc;
+}
+.description .leftArea{
+	width: 309px;
+}
+.description .rightArea{
+	width: 688px;
+	border-left: 1px solid #ccc;
+}
+/*图片展示*/
+.description_imgs .big{
+	height: 340px;
+	text-align: center;
+}
+.des_smimg li{
+	float: left;
+}
+.des_smimg{
+	padding-left: 1px;
+	width: 265px;
+	margin: 0 auto;
+}
+.des_smimg li{
+	margin-left: -1px;			/*消除重叠的边框*/
+}
 
+.des_smimg img{
+	border: 1px solid #ccc;
+}
 
+.des_smimg .active{
+	border-color: #317ee7;    /*右边框被覆盖所以设置层级relative*/
+	position: relative;
+}
+.des_content{
+	padding: 10px;
+}
+.des_content h3{
+	font-size: bold 16px/22px "微软雅黑";
+	padding: 12px 25px;
+}
+.des_content .dl{
+	margin-bottom: 10px;
+}
+.des_content .dt{
+	width: 75px;
+	float: left;
+	color: #666;
+	text-indent: 17px;
+	line-height: 25px;
+}
+.des_money{
+	font-size: 18px;
+	color: #f30;
+}
+.des_money em{
+	font-style: normal;
+	font-size: 12px;
+}
+/*换购*/
+.hg{
+	padding-top: 4px;
+	display: inline-block;
+}
+.hg_icon{
+	width: 55px;
+	height: 18px;
+	display: inline-block;
+	background: url(../images/hg_icon.png) left top no-repeat;
+	color: #fff;
+	font-style: normal;
+	text-indent: 16px;
+	line-height: 18px;
+	margin-right: 10px;
+}
