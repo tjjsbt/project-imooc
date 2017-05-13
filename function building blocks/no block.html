@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>使用定时器和回调防止代码阻塞</title>
+</head>
+<body>
+	<script type="text/javascript">
+		function factorial(n){
+			console.log(n);
+			return n == 1 ? 1 : n*factorial(n-1);
+		}
+		//通常和定时器事件相关的任何功能，都是在同一队列中的任何其他功能之后处理的。
+		//当一个比较耗时的进程完成之后，我们通常想要执行一个最终的操作，因此，我们把一个回调函数传递给定时器进程，该函数只在进程完成后调用。
+		//注意：回调及在等待进程或事件的同时不阻塞的概念，对于鼠标单击和Ajax调用的事件处理，以及针对Node.js的底层处理构架来说都是必须的。
+		function noBlock(n, callback){
+			setTimeout(function(){
+				var val = factorial(n);
+				if (callback && typeof callback == 'function') {
+					callback(val);
+				}
+			},0);
+		}
+
+		console.log("I'm Top!");
+
+		noBlock(3, function(n){
+			console.log('first call ends with '+ n);
+			noBlock(n, function(m){
+				console.log('finnal result is '+ m);
+			});
+		});
+
+		var count = 0;
+		for(var i = 0; i<10; i++){
+			count += i;
+		}
+
+		console.log("value of count is " + count);
+
+		noBlock(4, function(n){
+			console.log("end result is " + n);
+		});
+
+		console.log("not doing too much!");
+		//即便对noBlock()的调用发生在几次不相关的console.log()调用之前，该函数的处理不会阻塞其他的javascript代码的处理。此外callback()的调用会按照正确的顺序处理:两个外围的调用完成，然后，在回调中的第二次调用，针对处理过的callback()的第一次调用。
+	</script>
+</body>
+</html>

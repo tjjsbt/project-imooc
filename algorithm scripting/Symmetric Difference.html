@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Symmetric Difference</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    //对等差分(symmetric difference) (△ or ⊕)数组.
+    //给出两个集合 (如集合 A = {1, 2, 3} 和集合 B = {2, 3, 4}), 而数学术语 "对等差分" 的集合就是指由所有只在两个集合其中之一的元素组成的集合(A △ B = C = {1, 4}). 对于传入的额外集合 (如 D = {2, 3}), 你应该安装前面原则求前两个集合的结果与新集合的对等差分集合 (C △ D = {1, 4} △ {2, 3} = {1, 2, 3, 4}).
+    function sym(args) {
+        var arr = [];
+        for(var i=0; i<arguments.length; i++){
+        	arr.push(arguments[i]);
+        }
+        console.log(arr);
+        var temp = arr.reduce(function(pre,cur,index,arr){
+        	//返回不包含于cur里的pre的独有项
+        	var a = pre.filter(function(item){         
+        		return cur.indexOf(item) < 0;
+        	});
+        	console.log(a);
+        	//返回不包含于pre里的cur的独有项
+        	var b = cur.filter(function(item){
+        		return pre.indexOf(item) < 0;
+        	});
+        	console.log(b);
+        	return a.concat(b);
+        });
+        console.log(temp);
+        
+        return temp.filter(function(item,index,arr){      //去掉重复项
+        	return temp.indexOf(item) == index;
+        });
+    }
+
+    console.log(sym([1, 3, 2, 3], [5, 2, 1, 4]));
+    </script>
+</body>
+
+</html>

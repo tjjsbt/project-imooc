@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>递归</title>
+</head>
+<body>
+	<script type="text/javascript">
+		// 斐波那契数(Fibonacci Sequence)
+		var fibonacci = function(n){
+			return n < 2 ? n : fibonacci(n-1) + fibonacci(n-2);
+		}
+		console.log(fibonacci(5));
+		// 阶乘(factorial)  从1到给定数字n的所有整数的乘积。记作(n!)。
+		function factorial(n){
+			console.log(n);
+			return n == 1 ? 1 : n*factorial(n-1);
+		}
+		console.log(factorial(4));
+
+	</script>
+	<script type="text/javascript">
+		// 递归遍历一个数组并返回一个反向的数组字符串
+		var reverseArray = function(arr,index,str){
+			return  index == 0 ? str : reverseArray(arr, --index, (str += " " + arr[index]))
+		}
+		var arr1 = ["orange","apple","peach","lime"];
+		var str1 = reverseArray(arr1,arr1.length,"");
+		console.log(str1);
+		var arr2 = ["car","boat","bus","bike"];
+		var str2 = reverseArray(arr2,arr2.length,"");
+		console.log(str2);
+	</script>
+	<script type="text/javascript">
+		//按顺序把数组元素连接为一个字符串
+		var orderArray = function(arr,index,str){
+			return index == arr.length-1 ? str : orderArray(arr, ++index, (str += arr[index] + " "));
+		}
+		var arr3 = ["orange","apple","peach","lime"];
+		var str3 = orderArray(arr3,-1,"");
+		console.log(str3);
+	</script>
+</body>
+</html>
