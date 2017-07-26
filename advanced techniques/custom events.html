@@ -6,7 +6,97 @@
 </head>
 <body>
 	<script type="text/javascript">
-		
+		/*自定义事件*/
+		//事件是一种叫做观察者的设计模式，创建松散耦合代码的技术。
+		//观察者模式由两类对象组成：主体和观察者
+		//主体负责发布事件，同时观察者通过订阅这些事件来观察主体。
+		//关键概念：主体并不知道观察者的任何事情，可以独立存在并正常运作。
+		//观察者知道主体并能注册事件的回调函数(事件处理程序)。
+		//DOM中DOM元素便是主体，事件处理代码是观察者。
+		//自定义事件的概念是创建一个管理事件的对象，让其他对象监听那些事件。
+
+		function EventTarget(){
+			this.handlers = {};
+		}
+
+		EventTarget.prototype = {
+			constructor: EventTarget,
+			addHandler: function(type, handler){
+				if (typeof this.handlers[type] == "undefined") {
+					this.handlers[type] = [];
+				}
+
+				this.handlers[type].push(handler);
+			},
+
+			fire: function(event){
+				if (!event.target) {
+					event.target = this;
+				}
+				if (this.handlers[event.type] instanceof Array){
+					var handlers = this.handlers[event.type];
+					for(var i = 0, len = handlers.length; i < len; i++){
+						handlers[i](event);
+					}
+				}
+			},
+
+			removeHandler: function(type, handler){
+				if (this.handlers[type] instanceof Array) {
+					var handlers = this.handlers[type];
+					for(var i = 0, len = handlers.length; i < len; i++){
+						if (handlers[i] === handler){
+							break;
+						}
+					}
+
+					handlers.splice(i, 1);
+				}
+			}
+		}
+
+
+		function handleMessage(event){
+			alert("message received: " + event.message);
+		}
+
+		var target = new EventTarget();
+		target.addHandler("message", handleMessage);
+		target.fire({type: "message", message: "Hello World!"});
+
+		target.removeHandler("message", handleMessage);
+		//第二次不弹窗，因为已经取消了自定义事件
+		target.fire({type: "message", message: "Hello World!"});
+
+		//例：其他对象继承EventTarget
+		function Person(name, age){
+			EventTarget.call(this);
+			this.name = name;
+			this.age = age;
+		}
+
+		//寄生组合式继承的基本模式
+		function inheritPrototype(subType, superType){
+			var prototype =  Object(superType.prototype);
+			prototype.constructor = subType;
+			subType.prototype = prototype;
+		}
+
+		inheritPrototype(Person, EventTarget);
+
+		Person.prototype.say = function(message){
+			this.fire({type: "message", message: message});
+		}
+
+		function handleMessage1(event){
+			alert(event.target.name + " says: " + event.message);
+		}
+
+		var person = new Person("Chris", 33);
+		person.addHandler("message", handleMessage1);
+		person.say("Hi, how are you.");
+
+		//ps: 当代码中存在多个部分在特定时刻相互交互的情况下，自定义事件就非常有用了。使用自定义事件有助于解耦相关对象，保持功能的隔绝。很多情况中，触发事件的代码和监听时间的代码是完全分离的。
 	</script>
 </body>
 </html>
