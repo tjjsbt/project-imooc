@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>option element</title>
+</head>
+
+<body>
+    <form>
+        <input type="text" name="" size="25" maxlength="30" required="true">
+        <input type="number" min="0" max="10" name="num" pattern="\d+" required>
+        <input type="submit" name="" value="tijiao">
+        <input type="submit" name="btnNoValidate" value="non-validate">
+        <input type="checkbox" name="colors">red
+        <input type="checkbox" name="colors">blue
+        <fieldset></fieldset>
+        <select name="location" multiple="">
+            <option value="Los Angeles, CA" selected>Los Angeles</option>
+            <option value="Sunnyvale, CA" selected>Sunnyvale</option>
+            <option value="baoji" selected></option>
+            <option value="" selected>xianyang</option>
+            <option>Xi'an</option>
+        </select>
+    </form>
+    <script type="text/javascript">
+    //选择选项文本提取
+    var selectbox = document.forms[0].elements["location"];
+    function getSelectedOptions(selectbox){
+    	var result = new Array();
+    	var option = null;
+
+    	for (var i = 0, len = selectbox.options.length; i < len; i++) {
+    		option = selectbox.options[i];
+    		if (option.selected) {
+    			result.push(option);
+    		}
+    	}
+    	return result;
+    }
+   var selectedOptions = getSelectedOptions(selectbox);
+   var msg = "";
+
+   for(var i = 0, len = selectedOptions.length; i < len; i++){
+   	msg += "selected index: " + selectedOptions[i].index + "\nSelected text: " + selectedOptions[i].text + "\nSelected value: " + selectedOptions[i].value + "\n\n";
+   }
+   console.log("msg");
+
+   //添加选项
+   //DOM
+   var newOption = document.createElement("option");
+   newOption.appendChild(document.createTextNode("Option text"));
+   newOption.setAttribute("value","Option value");
+
+   selectbox.appendChild(newOption);
+
+   //构造函数
+   var newOption1 = new Option("Option text1", "Option value1");
+   selectbox.appendChild(newOption1);
+
+   //选择框的add()方法
+   var newOption2 = new Option("Option text2", "Option value2");
+   selectbox.add(newOption2, undefined);
+    </script>
+</body>
+
+</html>

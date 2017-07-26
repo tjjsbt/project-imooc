@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>form serialize</title>
+</head>
+<body>
+	<script type="text/javascript">
+		function serialize(){
+			var parts = [],
+			field = null,
+				i,
+				len,
+				j,
+				optLen,
+				option,
+				optValue;
+
+			for (i=0, len=form.elements.length; i < len; i++){
+				field = form.elements[i];
+
+				switch (field.type) {
+					//<select>元素将被选中的项目添加到parts
+					case "select-one":
+					case "select-multiple":
+
+					if (field.name.length) {
+						for (j=0, optLen = field.options.length; j < optLen; j++){
+							option = field.options[j];
+							if (option.selected) {
+								optValue = "";
+								if (option.hasAttribute) {
+									//DOM兼容浏览器中使用hasAttribut()方法
+									optValue = (option.hasAttribute("value") ? 
+												option.value : option.text);
+								}else {
+									//IE使用特性的specified属性
+									optValue = (option.attributes["value"].specified ? 
+												option.value : option.text);
+								}
+								parts.push(encodeURIComponent(field.name) + "=" +
+											encodeURIComponent(optValue));
+							}
+						}
+					}
+						break;
+
+					case undefined: 	//字段集
+					case "file": 		//文件输入
+					case "submit": 		
+					case "reset":
+					case "button":
+						break;
+
+					case "radio":
+					case "checkbox":
+						//单选框和复选框checked属性如果设置为false则退出switch语句,如果是true继续执行default
+						if (!field.checked) {
+							break;
+						}
+						/*执行默认操作*/
+
+					default:
+						//不包含没有名字的字段
+						if (field.name.length) {
+							parts.push(encodeURIComponent(field.name) + "=" +
+										encodeURIComponent(field.value));
+						}
+						break;
+				}
+			}
+			return parts.join("&");
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>对函数参数使用Array功能</title>
+</head>
+<body>
+	<div>test1</div>
+	<div>test2</div>
+	<div>test3</div>
+	<script type="text/javascript">
+		//method 1
+		function foo(){
+			var args = Array.prototype.slice.call(arguments);
+			//do something
+		}
+		//method 2
+		function foo1(){
+			var args = [].slice.call(arguments);
+			//do something
+		}
+
+		//exzample
+		function sumRound(){
+			var args = [].slice.call(arguments);
+
+			return args.reduce(function(val1, val2){
+				return parseInt(val1, 10) + parseInt(val2, 10);
+			})	
+		}
+
+		var sum = sumRound(2.5, "4", 19, 56.2);
+		console.log(sum);
+	</script>
+	<script type="text/javascript">
+		//turn NodeList into a Array
+		var div = document.querySelectorAll('div');
+		var divArr = [].slice.call(div);
+		divArr.forEach(function(elem){
+			console.log(elem.textContent);
+		})
+	</script>
+</body>
+</html>

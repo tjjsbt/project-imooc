@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>高级定时器</title>
+</head>
+<body>
+	<script type="text/javascript">
+		/*高级定时器*/
+		/*重复的定时器*/
+		//setInterval()的两个问题：1.某些间隔会被跳过；2.定时器的代码执行间隔可能会比预期的小。
+		//用链式setTimeout()解决这两个缺点
+		//前一个定时器代码执行完之前，不会像队列加入新的定时器代码(确保间隔);下次定时器代码执行之前，至少等到指定的间隔时间。
+		setTimeout(function(){
+			//处理中
+			setTimeout(arguments.callee, interval);
+		}, interval);
+
+		//例
+		setTimeout(function(){
+			var div = document.getElementById("myDiv");
+			left = parseInt(div.style.left) + 5;
+			div.style.left = left + 'px';
+
+			if (left < 200) {
+				setTimeout(arguments.callee, 50);
+			}
+		}, 50);
+
+
+		/*yielding processes*/
+
+		//数组分块(array chunking)
+		//关于循环两问 1.该数组是否必须同步完成？ 2.数据是否必须按顺序完成？
+		//如果循环时间较长切两问都是否，则用数组分块
+		function chunk(array, process, context){
+			//args 处理的项目的数组，处理项目的函数， 可选的运行该函数的执行环境
+			setTimeout(function(){
+				var item = array.shift();
+				process.call(context, item);
+
+				if(array.length > 0){
+					setTimeout(arguments.callee, 100);
+				}
+			},100);
+		}
+
+		//例
+		var data = [12, 123, 1234, 45, 23, 5, 3435, 5453, 134, 6545, 55, 565, 777];
+
+		function printValue(item){
+			var div = document.getElementById("myDiv");
+			div.innerHTML += item + "<br>";
+		}
+		//不传递任何参数调用某个数组的concat()方法时，将返回一个原来数组的副本。
+		chunk(data.concat(), printValue);
+		//数组分块将多个项目的处理在执行队列上分开，在每个项目处理之后，给予js进程时间线空闲，可以处理其他js脚本，避免长时间脚本运行错误。(如果某个函数需要花50ms以上的时间运行，就建议使用)
+
+
+		/*函数节流(function throttling)*/
+		//基本思路 某些代码不可以在没有间断的情况连续重复执行。使用定时器分割。
+		var processor = {
+			timeoutId: null,
+
+			//实际进行处理的方法
+			performProcessing: function(){
+				//实际执行的代码
+			},
+
+			//初始处理调用的方法
+			process: function(){
+				clearTimeout(this.timeoutId);
+
+				var that = this;
+				this.timeoutId = setTimeout(function(){
+					that.performProcessing();
+				}, 100);
+			}
+		};
+
+		//尝试开始执行
+		processor.process();
+
+		//throttle()函数简化
+		function throttle(method, context){
+			clearTimeout(method, tId);
+			method.tId = setTimeout(function(){
+				method.call(context);
+			}, 100);			
+		}
+
+		//IE中的onresize事件处理常用节流。
+		function resizeDiv(){
+			var div = document.getElementById("myDiv");
+			div.style.height = div.offsetWidth + "px";
+		}
+
+		window.onresize = function(){
+			throttle(resizeDiv)
+		};
+	</script>
+</body>
+</html>

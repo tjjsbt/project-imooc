@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>防篡改对象</title>
+</head>
+<body>
+	<script type="text/javascript">
+		/*不可扩展的对象*/
+		var person = {name: "Chirs"};
+		//设置为防篡改后，无法撤销。但仍可以修改或删除已有属性
+		Object.preventExtensions(person);
+
+		person.age = 33;
+		console.log(person.age);	//undefined
+
+		Object.isExtensible(person);	//false
+
+
+		/*密封的对象*/
+		var person1 = {name: "Nicholas"};
+		Object.isSealed(person1);	//false
+		Object.isExtensible(person1);	//true
+
+		//密封对象不可扩展，已有成员的[[Configurable]]特性将被设置为false(即不能删除属性和方法,但属性值可以修改)
+		Object.seal(person1);
+		Object.isSealed(person1);	//true
+		//因为被密封的对象不可扩展，所以返回false
+		Object.isExtensible(person1);	//false
+
+		person1.age = 28;
+		console.log(person1.age);	//undefined
+
+		delete person1.name;
+		console.log(person1.name); //"Nicholas"
+
+
+		/*冻结的对象*/
+		//最严格的防篡改级别。冻结的对象即不可扩展，又是密封的。
+		var person2 = {name: "Jim"};
+		Object.freeze(person2);
+
+		person.age = 29;
+		console.log(person.age);	//undefined
+
+		delete person.name;
+		console.log(person.name);	//undefined
+
+		person.name = "Greg";
+		console.log(person.name);	//"Jim"
+
+		Object.isExtensible(person2);	//false
+		Object.isSealed(person2);	//true
+		Object.isFrozen(person2);	//true
+
+		
+
+	</script>
+</body>
+</html>
