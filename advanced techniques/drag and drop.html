@@ -4,6 +4,9 @@
 	<meta charset="UTF-8">
 	<title>拖放</title>
 	<style type="text/css">
+		#explain{
+			float: right;
+		}
 		#myDiv{
 			width: 200px;
 			height: 200px;
@@ -24,6 +27,9 @@
 	</style>
 </head>
 <body>
+	<p id="explain">启动拖放：DragDrop.enable() <br>
+		关闭拖放：DragDrop.disable()
+	</p>
 	<div id="myDiv" class="draggable">Drag and drop</div>
 	<div id="status" class="draggable"></div>
 
