@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>indexDB</title>
+</head>
+<body>
+	<input type="" name="">
+	<script type="text/javascript">
+		var db,
+			arrayKey = [],
+			openRequest,
+			lastCursor,
+			indexDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.msIndexedDB;
+			dbName = "person",
+			tableName = "testTable";
+
+		function init(){
+
+			openRequest = indexedDB.open(dbName);
+			//handle setup
+			openRequest.onupgradeneeded = function(e){
+				console.log("running onupgradeneeded");
+				var thisDb = e.target.result;
+				console.log(thisDb.version);
+				if (!thisDb.objectStoreNames.contains(tableName)) {
+					console.log("I need to create the objectstore");
+					var objectStore = thisDb.createObjectStore(tableName, { keyPath: "id", antoIncrement: true});
+					objectStore.createIndex("name", "name", { unique: false});
+					objectStore.createIndex("phone", "phone", { unique:false});
+				}
+			}
+
+			openRequest.onsuccess = function(e){
+				db = e.target.result;
+				console.log(db.version);
+				db.onerror = function (evet){
+					// Geeric error handler for all erros targeted at this database's
+					alert("Database error: " + event.target.errorCode);
+					console.dir(event.target);
+				};
+				if (db.objectStoreNames.contains(tableName)) {
+					console.log("contains table" + tableName);
+					var transaction = db.transaction([tableName], "readwrite");
+					transaction.oncomplete = function (evetn){
+						console.log("All done!");
+					};
+					//var content = document.querySelector("#content");
+					transaction.onerror = function(event){
+						// Don't forget to handle errors!
+						console.dir(event);
+					};
+					// 得到表里的objectStore对象
+					var objectStore = transaction.objectStore(tableName);
+					//使用游标遍历
+					objectStore.openCursor().onsuccess = function (event){
+						var cursor = event.target.result;
+						if(cursor){
+							console.log(cursor.key);
+							console.dir(cursor.value);
+							render({key:cursor.key, name:cursor.value["name"],phone:cursor.value["phone"], address:cursor.value});
+							lastCursor = cursor.key;
+							cursor.continue();
+						}else{
+							cosole.log("Done with cursor");
+						}
+					};
+
+						objectStore.openCursor().onerror = function (event){
+						console.dir(event);
+					};
+
+				}
+			}
+		}
+
+	</script>
+</body>
+</html>

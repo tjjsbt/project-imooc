@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>自定义 local storage 的过期时间</title>
+</head>
+<body>
+	<script type="text/javascript">
+		function set(key, val){
+			var curTime = new Date().getTime();
+			localStorage.setItem(key, JSON.stringify({data:val, time:curTime}));
+		}
+
+		function get(key, exp){
+			var data = localStorage.getItem(key);
+			var dataObj = JSON.parse(data);
+			if (new Date().getTime() - dataObj.time > exp) {
+				console.log("expire");
+			}else {
+				console.log("data = " + dataObj.data);
+			}
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>图片预加载--无序加载</title>
+	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+	<style type="text/css">
+		html, body{
+			height: 100%;
+		}
+		a{
+			text-decoration: none;
+		}
+		.box{
+			text-align: center;
+		}
+		.btn{
+			display: inline-block;
+			height: 30px;
+			line-height: 30px;
+			border: 1px solid #ccc;
+			background-color: #fff;
+			padding: 0 10px;
+			margin-right: 50px;
+			color: #333;
+		}
+		.btn:hover{
+			background-color: #eee;
+		}
+		.loading{
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: #eee;
+			font-size: 30px;
+			text-align: center;
+		}
+		.progress{
+			margin-top: 300px;
+		}
+	</style>
+</head>
+<body>
+	<div class="box">
+		<img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1501899254197&di=6834bfb39a313c04b3772f0992c86fa1&imgtype=0&src=http%3A%2F%2Fimg142.poco.cn%2Fmypoco%2Fmyphoto%2F20130511%2F20%2F584918592013051120445086THX.jpg" alt="pic" id="img" width="1200" />
+		<p>
+			<a href="javascript:;" class="btn" data-control="prev">上一页</a>
+			<a href="javascript:;" class="btn" data-control="next">下一页</a>
+		</p>
+	</div>
+
+	<div class="loading">
+		<p class="progress">0%</p>
+	</div>
+
+	<script type="text/javascript" src="js/preload.js"></script>
+	<script type="text/javascript">
+		// var imgs = [
+		// 	"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1501899254197&di=6834bfb39a313c04b3772f0992c86fa1&imgtype=0&src=http%3A%2F%2Fimg142.poco.cn%2Fmypoco%2Fmyphoto%2F20130511%2F20%2F584918592013051120445086THX.jpg",
+		// 	"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1501899254196&di=667b27717d9d1d85341c07d300884d30&imgtype=0&src=http%3A%2F%2Fwww.1tong.com%2Fuploads%2Fwallpaper%2Flandscapes%2F342-5-1024x768.jpg",
+		// 	"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1501899254196&di=a6424e267b7f0bc6606f5baaae5195f2&imgtype=0&src=http%3A%2F%2Fimg.pconline.com.cn%2Fimages%2Fbbs4%2F20091%2F4%2F1231051755459.jpg",
+		// 	"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1501899254196&di=db062e55893cc8a8a731398bcfc4f6ba&imgtype=0&src=http%3A%2F%2Fpic29.nipic.com%2F20130506%2F12248059_155252547119_2.jpg",
+		// 	"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1501899254196&di=ab492b1390fddcd133c519bca92243aa&imgtype=0&src=http%3A%2F%2Fimg05.tooopen.com%2Fimages%2F20140605%2Fsy_62497135719.jpg",
+		// 	"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1501899254196&di=abbbfbac570fabab0486869e871bf7d9&imgtype=0&src=http%3A%2F%2Fwww.bz55.com%2Fuploads%2Fallimg%2F140329%2F137-140329104Q0.jpg"			
+		// ];
+
+		// var index = 0,
+		// 	len = imgs.length,
+		// 	count = 0,
+		// 	$progress = $(".progress");
+
+		// //预加载
+		// $.each(imgs, function(i, src){
+		// 	var imgObj = new Image();
+
+		// 	$(imgObj).on("load error", function(){
+		// 		$progress.html(Math.round((count + 1) / len * 100) + '%');
+
+		// 		if (count >= len - 1) {
+		// 			$(".loading").hide();
+		// 			document.title = "1/" + len;
+		// 		}
+		// 		count++;
+		// 	});
+		// 	imgObj.src = src;
+		// });
+
+		// //切换
+		// $(".btn").on("click", function(){			
+		// 	if ( "prev" === $(this).data("control")) {				
+		// 		index = Math.max(0, --index);
+		// 	}else{
+		// 		index = Math.min(len - 1, ++index);
+		// 	}
+		// 	document.title = (index + 1) + "/" + len;
+		// 	$("#img").attr("src", imgs[index]);
+		// });
+
+		var imgs = [
+			"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1501899254197&di=6834bfb39a313c04b3772f0992c86fa1&imgtype=0&src=http%3A%2F%2Fimg142.poco.cn%2Fmypoco%2Fmyphoto%2F20130511%2F20%2F584918592013051120445086THX.jpg",
+			"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1501899254196&di=667b27717d9d1d85341c07d300884d30&imgtype=0&src=http%3A%2F%2Fwww.1tong.com%2Fuploads%2Fwallpaper%2Flandscapes%2F342-5-1024x768.jpg",
+			"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1501899254196&di=a6424e267b7f0bc6606f5baaae5195f2&imgtype=0&src=http%3A%2F%2Fimg.pconline.com.cn%2Fimages%2Fbbs4%2F20091%2F4%2F1231051755459.jpg",
+			"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1501899254196&di=db062e55893cc8a8a731398bcfc4f6ba&imgtype=0&src=http%3A%2F%2Fpic29.nipic.com%2F20130506%2F12248059_155252547119_2.jpg",
+			"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1501899254196&di=ab492b1390fddcd133c519bca92243aa&imgtype=0&src=http%3A%2F%2Fimg05.tooopen.com%2Fimages%2F20140605%2Fsy_62497135719.jpg",
+			"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1501899254196&di=abbbfbac570fabab0486869e871bf7d9&imgtype=0&src=http%3A%2F%2Fwww.bz55.com%2Fuploads%2Fallimg%2F140329%2F137-140329104Q0.jpg"			
+		];
+
+		var index = 0,
+			len = imgs.length,			
+			$progress = $(".progress");
+
+
+		$.preload(imgs, {
+			each: function (count){
+				$progress.html(Math.round((count + 1) / len * 100) + '%');
+			},
+			all: function (){
+				$(".loading").hide();
+				document.title = "1/" + len;
+			}
+		});
+
+	
+		//切换
+		$(".btn").on("click", function(){			
+			if ( "prev" === $(this).data("control")) {				
+				index = Math.max(0, --index);
+			}else{
+				index = Math.min(len - 1, ++index);
+			}
+			document.title = (index + 1) + "/" + len;
+			$("#img").attr("src", imgs[index]);
+		});
+	</script>
+</body>
+</html>

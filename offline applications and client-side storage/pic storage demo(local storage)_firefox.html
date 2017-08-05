@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>picture storage demo</title>
+</head>
+<body>
+	<script type="text/javascript">
+		var src = '1.jpg';
+		function set(key){
+			var img = document.createElement('img');
+
+			img.addEventListener("load", function (){
+				var imgCanvas = document.createElement("canvas"),
+					imgContext = imgCanvas.getContext("2d");					
+				//确保canvas元素大小和图片尺寸一样
+				imgCanvas.width = this.width;
+				imgCanvas.height = this.height;
+
+				//渲染图片到canvas中
+				imgContext.drawImage(this, 0, 0, this.width, this.height);
+
+				//用data url的形式取出
+				var imgAsDataURL = imgCanvas.toDataURL("image/png");
+
+				//保存到本地储存中
+				try {
+					localStorage.setItem(key, imgAsDataURL);
+				} catch(e) {
+					
+					console.log("Storage failed: " + e);
+				}
+			},false);
+			img.src = src;
+		}
+		function get(key){//从本地缓存获取图片并渲染
+			var srcStr = localStorage.getItem(key);
+			var imgObj = document.createElement('img');
+			imgObj.src = srcStr;
+			document.body.appendChild(imgObj);
+		}
+	</script>
+</body>
+</html>
