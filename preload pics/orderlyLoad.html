@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>图片预加载 有序加载</title>
+	<style type="text/css">
+		
+		a{
+			text-decoration: none;
+		}
+		.box{
+			text-align: center;
+		}
+		.btn{
+			display: inline-block;
+			height: 30px;
+			line-height: 30px;
+			border: 1px solid #ccc;
+			background-color: #fff;
+			padding: 0 10px;
+			margin-right: 50px;
+			color: #333;
+		}
+		.btn:hover{
+			background-color: #eee;
+		}
+		
+	</style>
+</head>
+<body>
+
+	<div class="box">
+		<img src="http://manhua1023.61-174-50-99.cdndm5.com/1/675/7889/95_5585.jpg?cid=7889&key=35fff51cc64370faf9fd085c31c1f910" alt="pic" id="img" width="1200" />
+		<p>
+			<a href="javascript:;" class="btn" data-control="prev">上一页</a>
+			<a href="javascript:;" class="btn" data-control="next">下一页</a>
+		</p>
+	</div>
+
+	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+	<script type="text/javascript" src="js/preload.js"></script>
+	<script type="text/javascript">
+		/*var imgs = [
+			"http://manhua1023.61-174-50-99.cdndm5.com/1/675/7889/96_9889.png?cid=7889&key=35fff51cc64370faf9fd085c31c1f910",
+			"http://manhua1023.61-174-50-99.cdndm5.com/1/675/7889/97_8951.png?cid=7889&key=35fff51cc64370faf9fd085c31c1f910",
+			"http://manhua1023.61-174-50-99.cdndm5.com/1/675/7889/98_5452.png?cid=7889&key=35fff51cc64370faf9fd085c31c1f910",
+			"http://manhua1023.61-174-50-99.cdndm5.com/1/675/7889/99_1543.png?cid=7889&key=35fff51cc64370faf9fd085c31c1f910",
+			"http://manhua1023.61-174-50-99.cdndm5.com/1/675/7889/100_1858.png?cid=7889&key=35fff51cc64370faf9fd085c31c1f910",
+			"http://manhua1023.61-174-50-99.cdndm5.com/1/675/7889/101_4196.png?cid=7889&key=35fff51cc64370faf9fd085c31c1f910",
+			"http://manhua1023.61-174-50-99.cdndm5.com/1/675/7889/102_5899.png?cid=7889&key=35fff51cc64370faf9fd085c31c1f910",
+			"http://manhua1023.61-174-50-99.cdndm5.com/1/675/7889/103_2948.png?cid=7889&key=35fff51cc64370faf9fd085c31c1f910",
+			"http://manhua1023.61-174-50-99.cdndm5.com/1/675/7889/104_8096.png?cid=7889&key=35fff51cc64370faf9fd085c31c1f910",
+			"http://manhua1023.61-174-50-99.cdndm5.com/1/675/7889/105_9240.png?cid=7889&key=35fff51cc64370faf9fd085c31c1f910",
+			"http://manhua1023.61-174-50-99.cdndm5.com/1/675/7889/106_4582.png?cid=7889&key=35fff51cc64370faf9fd085c31c1f910",
+			"http://manhua1023.61-174-50-99.cdndm5.com/1/675/7889/107_4043.png?cid=7889&key=35fff51cc64370faf9fd085c31c1f910",
+			"http://manhua1023.61-174-50-99.cdndm5.com/1/675/7889/108_6833.png?cid=7889&key=35fff51cc64370faf9fd085c31c1f910",
+			"http://manhua1023.61-174-50-99.cdndm5.com/1/675/7889/109_5316.png?cid=7889&key=35fff51cc64370faf9fd085c31c1f910",
+			"http://manhua1023.61-174-50-99.cdndm5.com/1/675/7889/110_7091.png?cid=7889&key=35fff51cc64370faf9fd085c31c1f910",
+			""
+		];
+		var len = imgs.length,
+			count = 0,
+			index = 0;
+
+		
+		//有序加载
+		orderlyLoad();
+		function orderlyLoad(){
+			//1.创建image对象
+			var imgObj = new Image();
+			//2.绑定事件
+			$(imgObj).on("load error", function(){
+				if (count >= len) {
+					//所有图片加载完毕
+
+				}else {
+					//还有图片没有加载完成
+					orderlyLoad();
+				}
+
+				count++;
+			});
+
+			//3.复制路径
+			imgObj.src = imgs[count];
+		}
+
+		//切换上一页下一页
+		$(".btn").on("click", function(){			
+			if ( "prev" === $(this).data("control")) {//上一张			
+				index = Math.max(0, --index);
+			}else{//下一张
+				index = Math.min(len - 1, ++index);
+			}
+			document.title = (index + 1) + "/" + len;
+			$("#img").attr("src", imgs[index]);
+		});*/
+
+
+		var imgs = [
+			"http://manhua1023.61-174-50-99.cdndm5.com/1/675/7889/96_9889.png?cid=7889&key=35fff51cc64370faf9fd085c31c1f910",
+			"http://manhua1023.61-174-50-99.cdndm5.com/1/675/7889/97_8951.png?cid=7889&key=35fff51cc64370faf9fd085c31c1f910",
+			"http://manhua1023.61-174-50-99.cdndm5.com/1/675/7889/98_5452.png?cid=7889&key=35fff51cc64370faf9fd085c31c1f910",
+			"http://manhua1023.61-174-50-99.cdndm5.com/1/675/7889/99_1543.png?cid=7889&key=35fff51cc64370faf9fd085c31c1f910",
+			"http://manhua1023.61-174-50-99.cdndm5.com/1/675/7889/100_1858.png?cid=7889&key=35fff51cc64370faf9fd085c31c1f910",
+			"http://manhua1023.61-174-50-99.cdndm5.com/1/675/7889/101_4196.png?cid=7889&key=35fff51cc64370faf9fd085c31c1f910",
+			"http://manhua1023.61-174-50-99.cdndm5.com/1/675/7889/102_5899.png?cid=7889&key=35fff51cc64370faf9fd085c31c1f910",
+			"http://manhua1023.61-174-50-99.cdndm5.com/1/675/7889/103_2948.png?cid=7889&key=35fff51cc64370faf9fd085c31c1f910",
+			"http://manhua1023.61-174-50-99.cdndm5.com/1/675/7889/104_8096.png?cid=7889&key=35fff51cc64370faf9fd085c31c1f910",
+			"http://manhua1023.61-174-50-99.cdndm5.com/1/675/7889/105_9240.png?cid=7889&key=35fff51cc64370faf9fd085c31c1f910",
+			"http://manhua1023.61-174-50-99.cdndm5.com/1/675/7889/106_4582.png?cid=7889&key=35fff51cc64370faf9fd085c31c1f910",
+			"http://manhua1023.61-174-50-99.cdndm5.com/1/675/7889/107_4043.png?cid=7889&key=35fff51cc64370faf9fd085c31c1f910",
+			"http://manhua1023.61-174-50-99.cdndm5.com/1/675/7889/108_6833.png?cid=7889&key=35fff51cc64370faf9fd085c31c1f910",
+			"http://manhua1023.61-174-50-99.cdndm5.com/1/675/7889/109_5316.png?cid=7889&key=35fff51cc64370faf9fd085c31c1f910",
+			"http://manhua1023.61-174-50-99.cdndm5.com/1/675/7889/110_7091.png?cid=7889&key=35fff51cc64370faf9fd085c31c1f910",
+			""
+		];
+		var len = imgs.length,
+			count = 0,
+			index = 0;
+
+		$.preload(imgs, {
+			order: "ordered"
+		});
+		
+
+		//切换上一页下一页
+		$(".btn").on("click", function(){			
+			if ( "prev" === $(this).data("control")) {//上一张			
+				index = Math.max(0, --index);
+			}else{//下一张
+				index = Math.min(len - 1, ++index);
+			}
+			document.title = (index + 1) + "/" + len;
+			$("#img").attr("src", imgs[index]);
+		});
+	</script>
+</body>
+</html>
