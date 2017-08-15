@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>进度条4</title>
+	<style type="text/css">
+		.loading{
+			width: 100%;
+			height: 100%;
+			position: fixed;
+			top: 0;
+			left: 0;
+			z-index: 100;
+			background-color: #fff;
+		}
+		.loading .pic{
+			width: 0%;
+			height: 5px;			
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			background: #f33;			
+		}
+	</style>
+
+	<script src="https://cdn.bootcss.com/jquery/3.2.0/jquery.min.js"></script>
+	<script type="text/javascript"></script>
+</head>
+<body>
+	<div class="loading">
+		<div class="pic"></div>
+	</div>
+
+	<header>
+		<img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1502762063893&di=f17bc0f4ad2e6ea1167826fc39075cce&imgtype=0&src=http%3A%2F%2Fimg.article.pchome.net%2F00%2F52%2F45%2F50%2Fpic_lib%2Fwm%2F11.jpg" alt="" />
+	</header>
+
+	<!-- 头部加载完毕后 -->
+	<script type="text/javascript">
+		$(".loading .pic" ).animate({width:"10%"}, 100);
+	</script>
+
+	<section class="banner">
+		<img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1502762063893&di=c5dda7e5d4145bbb48ca37c0ce48595e&imgtype=0&src=http%3A%2F%2Fimgstore.cdn.sogou.com%2Fapp%2Fa%2F100540002%2F613885.jpg" alt="">
+	</section>
+	
+	<!-- 加载完banner -->
+	<script type="text/javascript">
+		$(".loading .pic" ).animate({width:"30%"}, 100);
+	</script>
+
+	<section class="about">
+		<img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1502762063893&di=bf36dfec47266f4d74ea264660ff0a2d&imgtype=0&src=http%3A%2F%2Fwww.sucaitianxia.com%2FPhoto%2Fpic%2F200906%2Ffengus28.jpg" alt="">
+	</section>
+	
+	<!-- 加载完about -->
+	<script type="text/javascript">
+		$(".loading .pic" ).animate({width:"50%"}, 100);
+	</script>
+
+	<section class="pro">
+		<img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1502762063892&di=def5bcdf06360d390c0003c4b71d8e4e&imgtype=0&src=http%3A%2F%2Fattach.bbs.miui.com%2Fforum%2F201311%2F28%2F102808lhjhh05b5tp8ph61.jpg" alt="">
+	</section>
+
+	<!-- 加载完pro -->
+	<script type="text/javascript">
+		$(".loading .pic" ).animate({width:"80%"}, 100);
+	</script>
+
+	<section class="news">
+		<img src="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1502785240&di=94dcd80047185b142bb083945ed799ab&src=http://e.hiphotos.baidu.com/zhidao/pic/item/9d82d158ccbf6c816c6ea481bd3eb13533fa407a.jpg" alt="">
+	</section>
+
+	<!-- 加载完news -->
+	<script type="text/javascript">
+		$(".loading .pic" ).animate({width:"90%"}, 100);
+	</script>
+
+	<footer>
+		<img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1502762063892&di=ce47223f5a53a71b7745ec8417a45944&imgtype=0&src=http%3A%2F%2Fimg.pconline.com.cn%2Fimages%2Fupload%2Fupc%2Ftx%2Fwallpaper%2F1307%2F20%2Fc3%2F23531338_1374288851927.jpg" alt="">
+	</footer>
+
+	<!-- 加载完footer -->
+	<script type="text/javascript">
+		$(".loading .pic" ).animate({width:"100%"}, 100, function(){
+			$(".loading").fadeOut();
+		});
+	</script>
+</body>
+</html>
