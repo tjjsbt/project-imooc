@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Star Ratingbar method 1 - 2</title>
+    <style type="text/css">
+    body,
+    ul,
+    li {
+        padding: 0;
+        margin: 0;
+    }
+
+    li {
+        list-style-type: none;
+    }
+
+    .rating {
+        width: 160px;
+        height: 32px;
+        margin: 100px auto;
+    }
+
+    .rating-item {
+        float: left;
+        width: 32px;
+        height: 32px;
+        background: url(imgs/rating.png) no-repeat;
+        cursor: pointer;
+    }
+    </style>
+</head>
+
+<body>
+    <!-- 也可以用div+a标签制作 -->
+    <!-- <div id="rating" class="rating">
+            <a href="javascript:;" class="rating-item" title="很不好"></a>
+            <a href="javascript:;" class="rating-item" title="不好"></a>
+            <a href="javascript:;" class="rating-item" title="一般"></a>
+            <a href="javascript:;" class="rating-item" title="好"></a>
+            <a href="javascript:;" class="rating-item" title="很好"></a>
+        </div> -->
+    <!-- 第一种实现方式 -->
+    <ul id="rating" class="rating">
+        <li class="rating-item" title="很不好"></li>
+        <li class="rating-item" title="不好"></li>
+        <li class="rating-item" title="一般"></li>
+        <li class="rating-item" title="好"></li>
+        <li class="rating-item" title="很好"></li>
+    </ul>
+    <ul id="rating2" class="rating">
+        <li class="rating-item" title="很不好"></li>
+        <li class="rating-item" title="不好"></li>
+        <li class="rating-item" title="一般"></li>
+        <li class="rating-item" title="好"></li>
+        <li class="rating-item" title="很好"></li>
+    </ul>
+    <script src="https://cdn.bootcss.com/jquery/3.2.0/jquery.min.js"></script>
+    <script type="text/javascript">
+    //局部作用域
+    //复用
+    var rating = (function() {
+
+        //点亮
+        var lightOn = function($item, num) {
+            $item.each(function(index) {
+                if (index < num) {
+                    $(this).css("background-position", "0 -32px");
+                } else {
+                    $(this).css("background-position", "0 0");
+                }
+            });
+        };
+
+
+        //外部接口
+        var init = function(el, num) {
+            var $rating = $(el),
+                $item = $rating.find(".rating-item");
+
+            //initial
+            lightOn($item, num);
+
+            //事件绑定
+            //将事件委托给父元素处理
+            $rating.on("mouseover", ".rating-item", function() {
+                lightOn($item, $(this).index() + 1);
+            }).on("click", ".rating-item", function() {
+                num = $(this).index() + 1;
+            }).on("mouseout", function() {
+                lightOn($item, num);
+            });
+        };
+
+        //jQuery插件
+        $.fn.extend({
+            rating: function(num){
+                console.log(this);
+                console.log($(this));
+                return this.each(function(){
+                    init(this, num);
+                });
+            }
+        });
+
+        return {
+            init: init
+        };
+
+    })();
+
+    rating.init("#rating", 2);
+    // rating.init("#rating2", 3);
+    $("#rating2").rating(4);
+    </script>
+</body>
+
+</html>

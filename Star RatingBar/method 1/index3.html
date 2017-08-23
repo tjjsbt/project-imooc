@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Star Ratingbar method 1-3</title>
+    <style type="text/css">
+    body,
+    ul,
+    li {
+        padding: 0;
+        margin: 0;
+    }
+
+    li {
+        list-style-type: none;
+    }
+
+    .rating {
+        width: 160px;
+        height: 32px;
+        margin: 100px auto;
+    }
+
+    .rating-item {
+        float: left;
+        width: 32px;
+        height: 32px;
+        background: url(imgs/rating.png) no-repeat;
+        cursor: pointer;
+    }
+    </style>
+</head>
+
+<body>
+    <!-- 也可以用div+a标签制作 -->
+    <!-- <div id="rating" class="rating">
+            <a href="javascript:;" class="rating-item" title="很不好"></a>
+            <a href="javascript:;" class="rating-item" title="不好"></a>
+            <a href="javascript:;" class="rating-item" title="一般"></a>
+            <a href="javascript:;" class="rating-item" title="好"></a>
+            <a href="javascript:;" class="rating-item" title="很好"></a>
+        </div> -->
+    <!-- 第一种实现方式 -->
+    <ul id="rating" class="rating">
+        <li class="rating-item" title="很不好"></li>
+        <li class="rating-item" title="不好"></li>
+        <li class="rating-item" title="一般"></li>
+        <li class="rating-item" title="好"></li>
+        <li class="rating-item" title="很好"></li>
+    </ul>
+    <ul id="rating2" class="rating">
+        <li class="rating-item" title="很不好"></li>
+        <li class="rating-item" title="不好"></li>
+        <li class="rating-item" title="一般"></li>
+        <li class="rating-item" title="好"></li>
+        <li class="rating-item" title="很好"></li>
+    </ul>
+    <script src="https://cdn.bootcss.com/jquery/3.2.0/jquery.min.js"></script>
+    <script type="text/javascript">
+    var rating = (function(){
+        //点亮整颗
+        var LightEntire = function(el, options){
+            this.$el = $(el);
+            this.$item = this.$el.find('.rating-item');
+            this.opts = options;
+        };
+        LightEntire.prototype.init = function(){
+            this.lightOn(this.opts.num);
+            //不是只读才绑定事件
+            if (!this.opts.readOnly) {
+                this.bindEvent();
+            }            
+        };
+        LightEntire.prototype.lightOn = function(num) {
+            num = parseInt(num);
+
+            this.$item.each(function(index) {
+                if (index < num) {
+                    $(this).css("background-position", "0 -32px");
+                } else {
+                    $(this).css("background-position", "0 0");
+                }
+            });
+        };
+        LightEntire.prototype.bindEvent = function(){
+            
+            //这里的this不太明白 再看一遍
+            var self = this,
+                itemLength = self.$item.length;
+            self.$el.on("mouseover", ".rating-item", function() {
+                var num = $(this).index() + 1;
+
+                self.lightOn(num);
+
+                (typeof self.opts.select === 'function') && self.opts.select.call(this,num, itemLength);
+                self.$el.trigger('select', [num, itemLength]);
+            })
+            .on("click", ".rating-item", function() {
+                self.opts.num = $(this).index() + 1;
+                (typeof self.opts.chosen === 'function') && self.opts.chosen.call(this, self.opts.num, itemLength);
+                self.$el.trigger('chosen', [self.opts.num, itemLength]);
+            })
+            .on("mouseout", function() {
+                self.lightOn(self.opts.num);
+            });
+        
+        };
+
+
+
+        //点亮半颗
+        var LightHalf = function(el, options){
+            this.$el = $(el);
+            this.$item = this.$el.find('.rating-item');
+            this.opts = options;
+            this.add = 1;
+        };
+        LightHalf.prototype.init = function(){
+            this.lightOn(this.opts.num);
+            //不是只读才绑定事件
+            if (!this.opts.readOnly) {
+                this.bindEvent();
+            }            
+        };
+        //半颗只有lightOn这里不一样
+        LightHalf.prototype.lightOn = function(num) {
+            var count = parseInt(num),
+            //如果不想等有多余的小数部分就是半颗
+                isHalf = parseInt(num) !== num;
+            
+
+            this.$item.each(function(index) {
+                if (index < count) {
+                    $(this).css("background-position", "0 -32px");
+                } else {
+                    $(this).css("background-position", "0 0");
+                }
+            });
+
+            if (isHalf) {
+                this.$item.eq(count).css('background-position', '0 -64px');
+            }
+        };
+        LightHalf.prototype.bindEvent = function(){
+             //这里的this不太明白 再看一遍
+            var self = this,
+                itemLength = self.$item.length;
+
+            self.$el.on("mousemove", ".rating-item", function(e) {
+                var $this = $(this),
+                    num = 0;
+                //(鼠标坐标离页面最左边的距离-星星左边到屏幕最左边的距离) 小于星星的一半大小 就是半颗
+                if (e.pageX - $(this).offset().left < $(this).width()/2) {
+                    self.add = 0.5;
+                }else{//整颗
+                    self.add = 1;
+                }
+
+                num = $this.index() + self.add;                
+
+                self.lightOn(num);
+
+                (typeof self.opts.select === 'function') && self.opts.select.call(this, num, itemLength);
+                self.$el.trigger('select', [num, itemLength]);
+            })
+            .on("click", ".rating-item", function() {
+                self.opts.num = $(this).index() + self.add;
+                (typeof self.opts.chosen === 'function') && self.opts.chosen.call(this, self.opts.num, itemLength);
+                self.$el.trigger('chosen', [self.opts.num, itemLength]);
+            })
+            .on("mouseout", function() {
+                self.lightOn(self.opts.num);
+            });
+        };
+
+
+        //默认参数
+        var defaults = {
+            mode: 'LightEntire',
+            num:0,
+            readOnly:false,
+            select:function(){},
+            chosen:function(){}
+        };
+
+        var mode = {
+            'LightEntire': LightEntire,
+            'LightHalf': LightHalf
+        };
+
+        //初始化
+        var init = function(el, options){
+            options = $.extend({},defaults,options);
+            //容错机制 如果用户mode没有给定正确的值，给他一个初始值
+            if (!mode[options.mode]) {
+                options.mode = 'LightEntire';
+            }
+            // new LightEntire(el, options).init();
+            //new LightHalf(el, options).init();
+            new mode[options.mode](el, options).init();
+            console.log(new mode[options.mode](el, options).init());
+        };
+        return {
+            init: init
+        };
+    })();
+
+    rating.init('#rating', {
+        mode:'LightHalf',
+        num:2.5,
+        // select: function(num, total){
+        //     console.log(this);
+        //     console.log(num + '/' + total);
+        // }
+    });
+
+    // $('#rating').on('select', function(e, num, total){
+    //      console.log(num + '/' + total);
+    // }).on('chosen', function(e, num, total){
+    //     console.log(num + '/' + total);
+    // });
+
+    /*//局部作用域
+    //复用
+    var rating = (function() {
+
+        //点亮
+        var lightOn = function($item, num) {
+            $item.each(function(index) {
+                if (index < num) {
+                    $(this).css("background-position", "0 -32px");
+                } else {
+                    $(this).css("background-position", "0 0");
+                }
+            });
+        };
+
+
+        //外部接口
+        var init = function(el, num) {
+            var $rating = $(el),
+                $item = $rating.find(".rating-item");
+
+            //initial
+            lightOn($item, num);
+
+            //事件绑定
+            //将事件委托给父元素处理
+            $rating.on("mouseover", ".rating-item", function() {
+                lightOn($item, $(this).index() + 1);
+            }).on("click", ".rating-item", function() {
+                num = $(this).index() + 1;
+            }).on("mouseout", function() {
+                lightOn($item, num);
+            });
+        };
+
+        //jQuery插件
+        $.fn.extend({
+            rating: function(num){
+                console.log(this);
+                console.log($(this));
+                return this.each(function(){
+                    init(this, num);
+                });
+            }
+        });
+
+        return {
+            init: init
+        };
+
+    })();
+
+    rating.init("#rating", 2);
+    // rating.init("#rating2", 3);
+    $("#rating2").rating(4);*/
+    </script>
+</body>
+
+</html>
