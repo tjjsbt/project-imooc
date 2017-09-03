@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Star Ratingbar method 4-1</title>
+    <style type="text/css">
+    	.rating{
+    		position: relative;
+    		width: 160px;
+    		height: 32px;
+    		background: url(imgs/rating2.png) repeat-x;
+    		margin: 100px auto;
+    	}
+    	.rating-item{
+			position: absolute;
+			top:0;
+			z-index: 3;				/*层级设为当前最高*/
+			width: 32px;
+			height: 32px;
+    	}
+    	.rating-item-1{
+			left: 0;
+    	}
+    	.rating-item-2{
+    		left:32px;
+    	}
+    	.rating-item-3{
+    		left:64px;
+    	}
+    	.rating-item-4{
+    		left:96px;
+    	}
+    	.rating-item-5{
+    		left:128px;
+    	}
+    	.rating-item:hover{
+			left: 0;
+			z-index: 2;			/*hover时降低层级*/
+			background: url(imgs/rating2.png) repeat-x 0 -32px;
+    	}
+    	.rating-item-1:hover{
+    		width: 32px;
+    	}
+    	.rating-item-2:hover{
+    		width: 64px;
+    	}
+    	.rating-item-3:hover{
+    		width: 96px;
+    	}
+    	.rating-item-4:hover{
+    		width: 128px;
+    	}
+    	.rating-item-5:hover{
+    		width: 160px;
+    	}
+    </style>
+</head>	
+<body>
+	<div class="rating">
+		<a href="javascript:;" class="rating-item rating-item-1" title="很不好"></a>
+		<a href="javascript:;" class="rating-item rating-item-2" title="不好"></a>
+		<a href="javascript:;" class="rating-item rating-item-3" title="一般"></a>
+		<a href="javascript:;" class="rating-item rating-item-4" title="好"></a>
+		<a href="javascript:;" class="rating-item rating-item-5" title="很好"></a>
+	</div>
+</body>
+</html>

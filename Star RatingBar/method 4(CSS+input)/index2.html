@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Star Ratingbar method 4-1</title>
+    <style type="text/css">
+    	.rating{
+    		position: relative;
+    		width: 160px;
+    		height: 32px;
+    		background: url(imgs/rating2.png) repeat-x;
+    		margin: 100px auto;
+            overflow: hidden;
+    	}
+        /*选中后熄灭星星*/
+        .rating:hover .rating-item{
+            background-image: none;
+        }
+        .rating-item:hover{
+            background: url(imgs/rating2.png) repeat-x 0 -32px !important;
+        }
+    	.rating-item{
+			position: absolute;
+			top:0;
+			z-index: 3;				/*层级设为当前最高*/
+			width: 32px;
+			height: 32px;
+    	}
+    	.rating-item-1{
+			left: 0;
+    	}
+    	.rating-item-2{
+    		left:32px;
+    	}
+    	.rating-item-3{
+    		left:64px;
+    	}
+    	.rating-item-4{
+    		left:96px;
+    	}
+    	.rating-item-5{
+    		left:128px;
+    	}
+    	.rating-item:hover{
+			left: 0;
+			z-index: 2;			/*hover时降低层级*/
+			background: url(imgs/rating2.png) repeat-x 0 -32px;
+    	}
+        .rating input{
+            position: absolute;
+            left: 0;
+            top: -32px;
+        }
+        input:checked + .rating-item{
+            left: 0;
+            z-index: 1;     /*选中后仍可以划过星星点亮星星*/
+            background: url(imgs/rating2.png) repeat-x 0 -32px;
+        }
+        input:checked + .rating-item ~ .rating-item:hover{
+            z-index: 0;
+        }
+    	.rating-item-1:hover, #rating-1:checked + .rating-item{
+    		width: 32px;
+    	}
+    	.rating-item-2:hover, #rating-2:checked + .rating-item{
+    		width: 64px;
+    	}
+    	.rating-item-3:hover, #rating-3:checked + .rating-item{
+    		width: 96px;
+    	}
+    	.rating-item-4:hover, #rating-4:checked + .rating-item{
+    		width: 128px;
+    	}
+    	.rating-item-5:hover, #rating-5:checked + .rating-item{
+    		width: 160px;
+    	}
+        .rating-item label{
+            display: inline-block;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+    </style>
+</head>	
+<body>
+	<form action="">
+        <div class="rating">
+                <input type="radio" name="rating" id="rating-1" value="1">
+            <a href="javascript:;" class="rating-item rating-item-1" title="很不好"><label for="rating-1"></label></a>
+                <input type="radio" name="rating" id="rating-2" value="2" checked="checked">
+            <a href="javascript:;" class="rating-item rating-item-2" title="不好"><label for="rating-2"></label></a>
+                <input type="radio" name="rating" id="rating-3" value="3">
+            <a href="javascript:;" class="rating-item rating-item-3" title="一般"><label for="rating-3"></label></a>
+                <input type="radio" name="rating" id="rating-4" value="4">
+            <a href="javascript:;" class="rating-item rating-item-4" title="好"><label for="rating-4"></label></a>
+                <input type="radio" name="rating" id="rating-5" value="5">
+            <a href="javascript:;" class="rating-item rating-item-5" title="很好"><label for="rating-5"></label></a>
+        </div>
+        <input type="submit" name="" value="提交">
+    </form>
+</body>
+</html>

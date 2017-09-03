@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Star Ratingbar method 5-1</title>
+    <style type="text/css">
+    body,
+    ul,
+    li {
+        padding: 0;
+        margin: 0;
+    }
+
+    li {
+        list-style-type: none;
+    }
+
+    .rating,
+    .rating-display {
+        background: url(imgs/rating2-1.png) repeat-x;
+    }
+
+    .rating {
+        position: relative;
+        width: 160px;
+
+        margin: 100px auto;
+    }
+
+    .rating-display {
+        width: 0;
+        height: 32px;
+        background-position: 0 -32px;
+    }
+
+    .rating-mask {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+    }
+
+    .rating-item {
+        float: left;
+        width: 32px;
+        height: 32px;
+        cursor: pointer;
+    }
+    </style>
+</head>
+
+<body>
+    <!-- 第五种实现方式 缺点：显示1/2 或1/4 颗时 li标签数量翻倍-->
+    <div id="rating" class="rating">
+        <!-- 动态生成html -->
+        <!-- 展示层
+		<div class="rating-display"></div>
+		遮罩层
+		<ul class="rating-mask">
+			<li class="rating-item"></li>
+			<li class="rating-item"></li>
+			<li class="rating-item"></li>
+			<li class="rating-item"></li>
+			<li class="rating-item"></li>
+		</ul>
+		 -->
+    </div>
+    <script type="text/javascript" src="http://libs.baidu.com/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript">
+    var rating = (function() {
+    	//策略模式
+    	var strategies = {
+    		entire: function(){
+    			return 1;
+    		},
+    		half: function(){
+    			return 2;
+    		},
+    		quarter: function(){
+    			return 4;
+    		}
+    	};
+
+        //2:评分 默认值 
+        var Rating = function(el, options) {
+            this.$el = $(el);
+            this.opts = $.extend({}, Rating.DEFAULTS, options);
+
+            //防止传进来的mode不是已有策略而报错
+            if (!strategies[this.opts.mode]) {
+            	this.opts.mode = 'entire';
+            }
+            //半颗星星(2) 1/4颗星星(4)
+            this.starCoefficient = strategies[this.opts.mode]();            
+            
+            this.opts.total *= this.starCoefficient;
+            this.opts.num *= this.starCoefficient;
+
+            this.itemWidth = 32/this.starCoefficient;
+            //展示层默认宽度
+            this.displayWidth = this.opts.num * this.itemWidth;
+        };
+        Rating.DEFAULTS = {
+        	mode: 'entire', //默认模式
+            total: 5, //共几颗星星
+            num: 2, //默认点亮了几颗
+            readOnly: false, //是否只读
+            select: function() {}, //鼠标划过星星
+            chosen: function() {} //点击星星后
+        };
+        //3:构造函数方法
+        Rating.prototype.init = function() {
+            this.buildHTML();
+            this.setCSS();
+            if (!this.opts.readOnly) {
+                this.bindEvent();
+            }
+        };
+        Rating.prototype.buildHTML = function() { //创建html		
+			var html = '';
+			html += '<div class="rating-display"></div><ul class="rating-mask">';
+			for (var i = 0; i < this.opts.total; i++) {
+				html += '<li class="rating-item"></li>'
+			}
+			html += '</ul>';
+
+			this.$el.html(html);
+        };
+        Rating.prototype.setCSS = function(){//设置CSS
+        	//设定父容器宽度
+        	this.$el.width(this.opts.total * this.itemWidth);
+        	//设定展示层
+        	this.$display = this.$el.find('.rating-display');
+        	this.$display.width(this.displayWidth);
+        	this.$el.find('.rating-item').width(this.itemWidth);
+        };
+        Rating.prototype.bindEvent = function(){//绑定事件
+        	var self = this;
+
+        	self.$el.on('mouseover', '.rating-item', function(){
+        		var count = $(this).index() + 1;
+
+        		self.$display.width(count * self.itemWidth);
+
+        		(typeof self.opts.select === 'funciton') && self.opts.select.call(this, count, self.opts.total);
+        		self.$el.trigger('select', [count, self.opts.total]);
+        	}).on('click', '.rating-item', function(){
+        		var count = $(this).index() + 1;
+
+        		self.displayWidth = count * self.itemWidth;
+
+        		(typeof self.opts.select === 'funciton') && self.opts.chosen.call(this, count, self.opts.total);
+        		self.$el.trigger('chosen', [count, self.opts.total]);        		
+        	}).on('mouseout', function(){
+        		self.$display.width(self.displayWidth);
+        	});
+        };
+
+        // 1:init
+        var init = function(el, option) {
+        	var $el = $(el),
+        		rating = $el.data('rating');
+
+        	if (!rating) {
+        		$el.data('rating', (rating = new Rating(el, typeof option === 'object' && option)));
+        		rating.init();
+        	}
+        	//如果传进来的option是字符串，将他当作方法来调用
+        	if (typeof option === 'string') rating[option]();
+        };
+
+        //jQuery插件
+        $.fn.extend({
+        	rating: function(option){
+        		return this.each(function(){
+        			init(this, option);
+        		});
+        	}
+        });
+
+        return {            
+            init: init
+        };
+    })();
+
+    $('#rating').rating({
+    	mode: 'half',
+    	total: 5,
+    	num: 2,
+    	readOnly: false,
+    	// select: function(count, total){
+    	// 	console.log(this);
+    	// 	console.log(count + '/' + total);	
+    	// },
+    	chosen: function(count, total){
+    		console.log(this);
+    		console.log(count + '/' + total);
+    		$('#rating').init('#rating', 'unbindEvent');
+    	}
+    });
+    // rating.init('#rating', {
+    // 	total: 6,
+    // 	num: 3,
+    // 	readOnly: true,
+    // 	// select: function(count, total){
+    // 	// 	console.log(this);
+    // 	// 	console.log(count + '/' + total);	
+    // 	// },
+    // 	chosen: function(count, total){
+    // 		console.log(this);
+    // 		console.log(count + '/' + total);
+    // 		rating.init('#rating', 'unbindEvent');
+    // 	}
+    // });
+    </script>
+</body>
+
+</html>
