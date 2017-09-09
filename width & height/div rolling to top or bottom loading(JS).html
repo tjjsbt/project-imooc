@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>div rolling to top or bottom loading</title>
+    <style type="text/css">
+    .scrollDiv {
+        width: 500px;
+        height: 400px;
+        margin: 10px auto;
+        padding: 10px;        
+        background-color: #FFF2E2;
+        overflow-y: scroll; 
+    }
+    </style>
+</head>
+
+<body>
+    <div class="scrollDiv" id="scrollDiv">
+    	contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>contents<br>
+    </div>
+    <script type="text/javascript">
+    	var scrollDiv = document.getElementById('scrollDiv');
+    	function divScroll(){
+    		 var wholeHeight = scrollDiv.scrollHeight;
+    		 var scrollTop = scrollDiv.scrollTop;
+    		 var divHeight = scrollDiv.clientHeight;
+    		 if (scrollTop + divHeight >= wholeHeight) {
+    		 	alert('div bottom');
+    		 }
+    		 if (scrollTop == 0) {
+    		 	alert('div top');
+    		 }
+    	}
+
+    	scrollDiv.onscroll = divScroll;
+    </script>
+</body>
+
+</html>

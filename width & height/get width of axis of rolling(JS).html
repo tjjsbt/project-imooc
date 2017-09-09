@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>get width of axis of rolling(JS)</title>
+	<style type="text/css">
+		.haha{
+			margin: 1000px auto;
+		}
+	</style>
+</head>
+<body>
+	<div class="haha"></div>
+	<script type="text/javascript">
+		//获取滚动轴宽度 = 元素的offsetWidth - 元素的clientWidth 
+		//第一种方式
+		// function getScrollBarWidth(){
+		// 	var el = document.createElement('p'),
+		// 		styles = {
+		// 			width: '100px',
+		// 			height: '100px',
+		// 			overflowY: 'scroll'
+		// 		},
+		// 		i,
+		// 		scrollBarWidth;
+
+		// 		for(i in styles){
+		// 			el.style[i] = styles[i];
+		// 		}
+		// 		document.body.appendChild(el);
+		// 		var scrollBarWidth = el.offsetWidth - el.clientWidth;
+		// 		el.remove();
+		// 		return scrollBarWidth;
+		// }
+
+		// console.log(getScrollBarWidth());
+
+		//第二种方式
+		//滚动轴宽度 = 元素无滚动轴的width - 元素有滚动轴的width 
+		function getScrollBarWidth(){
+			var el = document.createElement('p'),
+				styles = {
+					width: '100px',
+					height: '100px',
+					
+				},
+				i,
+				clientWidth1,
+				clientWidth2,
+				scrollBarWidth;
+
+				for(i in styles){
+					el.style[i] = styles[i];
+				}
+				document.body.appendChild(el);
+				//没有滚动轴的clientWidth
+				clientWidth1 = el.clientWidth;
+				//添加滚动轴
+				el.style.overflowY = "scroll";
+				//有滚动轴的clientWidth
+				clientWidth2 = el.clientWidth;
+				
+				var scrollBarWidth = clientWidth1 - clientWidth2;
+				el.remove();
+				return scrollBarWidth;
+		}
+
+		console.log(getScrollBarWidth());
+	</script>
+</body>
+</html>

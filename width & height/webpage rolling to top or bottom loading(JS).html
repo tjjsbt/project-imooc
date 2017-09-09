@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>webpage rolling to top or bottom loading</title>
+	<style type="text/css">
+		.scrollDiv{
+			width: 500px;
+			height: 400px;
+			margin: 1000px auto 100px auto;
+			background-color: #ff0000;
+		}
+	</style>
+</head>
+<body>
+	<div class="scrollDiv"></div>
+	<script type="text/javascript">
+		//网页滚动轴滚动到头部或者底部
+		function scrollTopOrBottom(){
+			var clients = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+			/*var scrollTop = document.body.scrollTop;	//firefox上为0
+			var scrollTop = document.documentElement.scrollHeight;	//chrome为0*/
+			var scrollTop = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
+			//ps: scrollHeight 在document和div下的区别
+			var wholeHeight = document.body.scrollHeight;	
+			
+
+			if (clients+scrollTop >= wholeHeight) {
+				alert('bottom');
+				//平时应用，ajax 调用分页 (page size page number)填充到页面
+			}
+			if (scrollTop == 0) {
+				alert('top');
+			}
+		}
+
+		window.onscroll = scrollTopOrBottom;
+	</script>
+</body>
+</html>
