@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Visual area loading(jQ)</title>
+    <script type="text/javascript" src='http://libs.baidu.com/jquery/2.0.0/jquery.min.js'></script>
+    <style type="text/css">
+    #showDiv {
+        width: 500px;
+        height: 350px;
+        background-color: red;
+        margin: 1000px auto 0 auto;
+    }
+
+    @-webkit-keyframes fadeInLeft {
+        0% {
+            opacity: 0;
+            -webkit-transform: translate3d(-100%, 0, 0);
+            -ms-transform: translate3d(-100%, 0, 0);
+            transform: translate3d(-100%, 0, 0);
+        }
+        100% {
+            opacity: 1;
+            -webkit-transform: none;
+            -ms-transform: none;
+            transform: none;
+        }
+    }
+
+    .fadeInLeft {
+        -webkit-animation-name: fadeInLeft;
+        animation-name: fadeInLeft;
+        -webkit-animation-duration: 2s;
+        animation-duration: 2s;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="showDiv"></div>
+    <script type="text/javascript">
+    //showDiv 到了可视区域的时候加载
+    $(window).scroll(function(){
+        var visual_area = $(window).height();
+        var scrollHeight = $(window).scrollTop();
+        var divTop = $('#showDiv').offset().top;
+        if (visual_area + scrollHeight >= divTop) {
+            $('#showDiv').addClass('fadeInLeft');
+        }
+    });
+    </script>
+</body>
+
+</html>
