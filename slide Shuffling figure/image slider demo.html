@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>image slider demo</title>
+</head>
+<body>
+	<div>
+		<button onclick="prev()">Prev</button>
+		<img src="images/door1.jpg" alt="" id="slider" width="420px" height="480px" />
+		<button onclick="next()">Next</button>
+	</div>
+	<script type="text/javascript">
+		var images = [
+			"images/door1.jpg",
+			"images/door2.jpg",
+			"images/door3.jpg",
+			"images/door4.jpg",
+		];
+		var num = 0;
+		var slider = document.getElementById("slider");
+
+		function next(){
+			num++;
+			if (num >= images.length) {
+				num = 0;
+			}
+			slider.src = images[num];
+		}
+
+		function prev(){
+			num--;
+			if (num < 0) {
+				num = images.length - 1;
+			}
+			slider.src = images[num];
+		}
+	</script>
+</body>
+</html>
