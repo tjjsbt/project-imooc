@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>下拉框左右选择</title>
+    <script src='http://libs.baidu.com/jquery/2.0.0/jquery.min.js'></script>
+    <style type="text/css">
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    div.content {
+        float: left;
+        text-align: center;
+        margin: 10px;
+    }
+
+    span {
+        display: block;
+        margin: 2px 2px;
+        padding: 4px 10px;
+        background: #898989;
+        cursor: pointer;
+        font-size: 12px;
+        color: white;
+    }
+    </style>
+    <script type="text/javascript">
+    $(function() {
+    	//选中添加到右边
+        $('#add').click(function() {
+            var $options = $('#select1 option:selected');
+            // var $remove = $options.remove();
+            // $remove.appendTo('#select2');
+            $options.appendTo('#select2');//删除和追加这两部可以用appendTo()直接完成
+        });
+        //全部添加到右边
+        $('#add_all').click(function() {
+            var $options = $('#select1 option');
+            $options.appendTo('#select2');
+        });
+        //双击某选项将其添加给对方
+        $('#select1').dblclick(function(){
+        	var $opts = $('option:selected', this);
+        	$opts.appendTo('#select2');
+        });
+        //选中删除到左边
+        $('#remove').click(function() {
+            var $options = $('#select2 option:selected');           
+            $options.appendTo('#select1');
+        });
+        //全部删除到左边
+        $('#remove_all').click(function() {
+            var $options = $('#select2 option');
+            $options.appendTo('#select1');
+        });
+
+    });
+    </script>
+</head>
+
+<body>
+    <div class="content">
+        <select multiple id="select1" style="width:100px; height: 160px">
+            <option value="1">选项1</option>
+            <option value="2">选项2</option>
+            <option value="3">选项3</option>
+            <option value="4">选项4</option>
+            <option value="5">选项5</option>
+            <option value="6">选项6</option>
+            <option value="7">选项7</option>
+            <option value="8">选项8</option>
+        </select>
+        <div>
+            <span id="add">选中添加到右边&gt;&gt;</span>
+            <span id="add_all">全部添加到右边&gt;&gt;</span>
+        </div>
+    </div>
+    <div class="content">
+        <select multiple id="select2" style="width:100px; height: 160px">
+        </select>
+        <div>
+            <span id="remove">&lt;&lt;选中删除到左边</span>
+            <span id="remove_all">&lt;&lt;全部删除到左边</span>
+        </div>
+    </div>
+</body>
+
+</html>

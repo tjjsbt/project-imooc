@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>文本框得到或失去焦点</title>
+    <script src='http://libs.baidu.com/jquery/2.0.0/jquery.min.js'></script>
+    <style type="text/css">
+    body {
+        font: normal 12px/17px Arial;
+    }
+
+    div {
+        padding: 2px;
+    }
+
+    input,
+    textarea {
+        width: 12em;
+        border: 1px solid #888;
+    }
+	
+	input:focus, textarea:focus{
+		border: 1px solid #f00;
+        background: #fcc;
+	}
+	/*IE6不支持除了超链接元素以外的:hover伪类选择符号,用jQ写*/
+    .focus {
+        border: 1px solid #f00;
+        background: #fcc;
+    }
+    </style>
+    <script type="text/javascript">
+    	$(function(){//ie6兼容
+    		$(':input').focus(function(){
+    			$(this).addClass('focus');
+    		}).blur(function(){
+    			$(this).removeClass('focus');
+    		});
+    	});
+    </script>
+</head>
+
+<body>
+    <form action="#" method="POST" id="regForm">
+        <fieldset>
+            <legend>个人基本信息</legend>
+            <div>
+                <label for="username">名称:</label>
+                <input type="text" id="username">
+            </div>
+            <div>
+                <label for="pass">密码:</label>
+                <input type="text" id="pass">
+            </div>
+            <div>
+                <label for="msg">详细信息:</label>
+                <textarea id="msg"></textarea>
+            </div>
+        </fieldset>
+    </form>
+</body>
+
+</html>

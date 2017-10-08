@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ceshi</title>
+    <script src='http://libs.baidu.com/jquery/2.0.0/jquery.min.js'></script>
+    <style type="text/css">
+    body {
+        font: 12px/19px Arial, Helvetica, sans-serif;
+        color: #666;
+    }
+
+    form div {
+        margin: 5px 0;
+    }
+
+    .int label {
+        float: left;
+        width: 100px;
+        text-align: right;
+    }
+
+    .int input {
+        padding: 1px 1px;
+        border: 1px solid #ccc;
+        height: 16px;
+    }
+
+    .sub {
+        padding-left: 100px;
+    }
+
+    .sub input {
+        margin-right: 10px;
+    }
+
+    .formtips {
+        width: 200px;
+        margin: 2px;
+        padding: 2px;
+    }
+
+    .onError {
+        background: #FFE0E9 url(./img/reg3.gif) no-repeat 0 center;
+        padding-left: 25px;
+    }
+
+    .onSuccess {
+        background: #E9FBEB url(./img/reg4.gif) no-repeat 0 center;
+        padding-left: 25px;
+    }
+
+    .high {
+        color: red;
+    }
+    </style>
+    <script>
+    $(function() {
+        $('form :input.required').each(function() {
+            var $required = $("<strong class='high'>*</strong>");
+            $(this).parent().append($required);
+        });
+        $('form :input').blur(function() {
+            var $parent = $(this).parent();
+            var reg = /.+@.+\.[a-zA-Z]{2,4}$/;
+            $parent.find('.formtips').remove();//去掉之前添加的提醒框
+            //验证用户名
+            if ($(this).is('#username')) {
+                if (this.value=='' || this.value.length<6) {
+                    var errorMsg = '请输入至少6位的用户名.';                    
+                    $parent.append('<span class="formtips onError">' + errorMsg+ '</span>');
+                }else {
+                    var okMsg = '输入正确.';
+                    $parent.append('<span class="formtips onSuccess">' + okMsg + '</span>');
+                }
+            }
+
+            //验证邮箱
+            if ($(this).is('#email')) {
+                if(this.value == '' || (this.value != '' && !reg.test(this.value))){
+                    var errorMsg = '请输入正确的E-mail地址';
+                    $parent.append('<span class="formtips onError">' + errorMsg + '</span>'); 
+                }else {
+                    var okMsg = '输入正确.';
+                    $parent.append('<span class="formtips onSuccess">' + okMsg + '</span>');
+                }                
+            }
+        }).keyup(function(){
+            $(this).triggerHandler("blur");
+        }).focus(function(){
+            $(this).triggerHandler("blur");
+        });
+
+        //表单提交前对表单做整体验证
+        $('#send').click(function(){
+            $("form .required:input").trigger('blur');            
+            var numError = $('form .onError').length;
+            //numError的值是0的时候才可以调教表单
+            if (numError) {
+                return false;//阻止表单提交
+            }                
+            alert('注册成功，密码已经发到你的邮箱请查收。');         
+        });
+
+        //重置
+        $('#res').click(function() {
+            $('.formtips').remove();
+        });
+
+    });
+    </script>
+</head>
+
+<body>
+    <form action="" method="post">
+        <div class="int">
+            <label for="username">用户名:</label>
+            <input type="text" id="username" class="required">
+        </div>
+        <div class="int">
+            <label for="email">Email:</label>
+            <input type="text" id="email" class="required">
+        </div>
+        <div class="int">
+            <label for="personinfo">个人资料:</label>
+            <input type="text" id="personinfo">
+        </div>
+        <div class="sub">
+            <input type="submit" name="" value="提交" id="send">
+            <input type="reset" name="" value="重置" id="res">
+        </div>
+    </form>
+</body>
+
+</html>

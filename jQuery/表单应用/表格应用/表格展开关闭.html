@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>表格展开关闭</title>
+	<script src='http://libs.baidu.com/jquery/2.0.0/jquery.min.js'></script>
+	<style type="text/css">
+	table{ border:0;border-collapse:collapse;}
+	td{ font:normal 12px/17px Arial;padding:2px;width:100px;}
+	th{ font:bold 12px/17px Arial;text-align:left;padding:4px;border-bottom:1px solid #333;width:100px;}
+	.parent{ background:#FFF38F;cursor:pointer;}  /* 偶数行样式*/
+	.odd{ background:#FFFFEE;}  /* 奇数行样式*/
+	.selected{ background:#FF6500;color:#fff;}
+	</style>
+	<script type="text/javascript">
+		$(function(){
+			//点击关闭/展开
+			$('tr.parent').click(function(){
+				$(this).toggleClass("selected")//添加/删除高亮
+				.siblings('.child_' + this.id).toggle();//显示/隐藏子行
+			})
+			//.click();//默认关闭
+
+		});
+	</script>
+</head>
+<body>
+	<table>
+		<thead>
+			<tr><th>姓名</th><th>性别</th><th>暂住地</th></tr>
+		</thead>
+		<tbody>
+			<tr class="parent" id="row_1">
+				<td colspan="3">前端设计组</td>
+			</tr>			
+			<tr class="child_row_1">
+				<td>蜘蛛</td>
+				<td>女</td>
+				<td>陕西西安</td>
+			</tr>
+			<tr class="child_row_1">
+				<td>蜘蛛</td>
+				<td>女</td>
+				<td>陕西西安</td>
+			</tr>
+			<tr class="child_row_1">
+				<td>蜘蛛</td>
+				<td>女</td>
+				<td>陕西西安</td>
+			</tr>
+			<tr class="parent" id="row_2">
+				<td colspan="3">前端设计组</td>
+			</tr>
+			<tr class="child_row_2">
+				<td>蜘蛛</td>
+				<td>女</td>
+				<td>陕西西安</td>
+			</tr>
+			<tr class="child_row_2">
+				<td>蜘蛛</td>
+				<td>女</td>
+				<td>陕西西安</td>
+			</tr>
+			<tr class="child_row_2">
+				<td>蜘蛛</td>
+				<td>女</td>
+				<td>陕西西安</td>
+			</tr>
+			<tr class="parent" id="row_3">
+				<td colspan="3">前端设计组</td>
+			</tr>
+			<tr class="child_row_3">
+				<td>蜘蛛</td>
+				<td>女</td>
+				<td>陕西西安</td>
+			</tr>
+			<tr class="child_row_3">
+				<td>蜘蛛</td>
+				<td>女</td>
+				<td>陕西西安</td>
+			</tr>
+			<tr class="child_row_3">
+				<td>蜘蛛</td>
+				<td>女</td>
+				<td>陕西西安</td>
+			</tr>	
+		</tbody>
+	</table>
+</body>
+</html>

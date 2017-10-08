@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>表格变色单选框</title>
+    <script src='http://libs.baidu.com/jquery/2.0.0/jquery.min.js'></script>
+    <style type="text/css">
+    	table{ border:0;border-collapse:collapse;}
+		td{ font:normal 12px/17px Arial;padding:2px;width:100px;}
+		th{ font:bold 12px/17px Arial;text-align:left;padding:4px;border-bottom:1px solid #333;}
+		.even{ background:#FFF38F;}  /* 偶数行样式*/
+		.odd{ background:#FFFFEE;}  /* 奇数行样式*/
+		.selected{ background:#FF6500;color:#fff;}
+    </style>
+    <script type="text/javascript">
+    	$(function(){
+    		$('tbody > tr:odd').addClass("odd");
+    		$('tbody > tr:even').addClass("even");
+    		/*//默认选中一行
+    		$('tr:contains("盲僧")').addClass('selected');*/
+    		//点击某行高亮显示且单选框被选中
+    		$('tbody > tr').click(function(){
+    			$(this).addClass('selected')
+    			.siblings()	//跳到兄弟节点
+    			.removeClass('selected')
+    			.end() //从新返回点击节点
+    			.find(':radio').prop('checked',true);
+    		});
+    		//默认已被选中的行高亮显示
+    		//$('table :radio:checked').parent().parent().addClass('selected');	
+    		//$('table :radio:checked').parents('tr').addClass('selected');	
+    		$('tbody > tr:has(:checked)').addClass('selected');
+    	});
+    </script>
+</head>	
+<body>
+	<table>
+		<thead>
+			<tr><th></th><th>姓名</th><th>性别</th><th>暂住地</th></tr>
+		</thead>
+		<tbody>
+			<tr><td><input type="radio" name="choice" name=""></td>
+				<td>皎月</td><td>女</td><td>陕西西安</td></tr>
+			<tr><td><input type="radio" name="choice" name=""></td>
+				<td>奥巴马</td><td>男</td><td>湖南长沙</td></tr>
+			<tr><td><input type="radio" name="choice" name="" checked></td>
+				<td>盲僧</td><td>男</td><td>陕西宝鸡</td></tr>
+			<tr><td><input type="radio" name="choice" name=""></td>
+				<td>蜘蛛</td><td>女</td><td>浙江温州</td></tr>
+			<tr><td><input type="radio" name="choice" name=""></td>
+				<td>吉格斯</td><td>男</td><td>北京</td></tr>
+			<tr><td><input type="radio" name="choice" name=""></td>
+				<td>狐狸</td><td>女</td><td>陕西延安</td></tr>
+			<tr><td><input type="radio" name="choice" name=""></td>
+				<td>露露</td><td>女</td><td>上海</td></tr>
+			<tr><td><input type="radio" name="choice" name=""></td>
+				<td>劫</td><td>男</td><td>浙江宁波</td></tr>
+			<tr><td><input type="radio" name="choice" name=""></td>
+				<td>韦鲁斯</td><td>男</td><td>陕西榆林</td></tr>
+		</tbody>
+	</table>
+</body>
+</html>

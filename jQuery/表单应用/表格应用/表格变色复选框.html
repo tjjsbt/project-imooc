@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>表格变色复选框</title>
+    <script src='http://libs.baidu.com/jquery/2.0.0/jquery.min.js'></script>
+    <style type="text/css">
+    	table{ border:0;border-collapse:collapse;}
+		td{ font:normal 12px/17px Arial;padding:2px;width:100px;}
+		th{ font:bold 12px/17px Arial;text-align:left;padding:4px;border-bottom:1px solid #333;}		
+		.even{ background:#FFF38F;}  /* 偶数行样式*/
+		.odd{ background:#FFFFEE;}  /* 奇数行样式*/
+		.selected{ background:#FF6500;color:#fff;border-bottom: 1px solid #ccc;margin-bottom: -1px;}
+    </style>
+    <script type="text/javascript">
+    	$(function(){
+    		$('tbody > tr:odd').addClass("odd");
+    		$('tbody > tr:even').addClass("even");
+    		//复选高亮
+    		/*$('tbody > tr').click(function(){
+    			if ($(this).hasClass('selected')) {
+    				$(this).removeClass('selected')
+    				.find(':checkbox').prop('checked',false);
+    			}else {
+    				$(this).addClass('selected')
+    				.find(':checkbox').prop('checked',true);
+    			}
+    		});*/
+    		//复选高亮简化代码
+    		$('tbody > tr').click(function(){
+    			//判断是否选中
+    			var hasSelected = $(this).hasClass('selected');
+    			//如果选中，则移出selected类，否则就加上selected类
+    			$(this)[hasSelected ? "removeClass" : "addClass"]('selected')
+    			//查找内部checkbox，设置是否勾选
+    			.find(':checkbox').prop('checked', !hasSelected);
+    		})
+
+    		//默认已被选中的行高亮显示
+    		//$('table :checkbox:checked').parent().parent().addClass('selected');
+    		//$('table :checkbox:checked').parents('tr').addClass('selected');	
+    		$('tbody > tr:has(:checked)').addClass('selected');
+    	});
+    </script>
+</head>	
+<body>
+	<table>
+		<thead>
+			<tr><th></th><th>姓名</th><th>性别</th><th>暂住地</th></tr>
+		</thead>
+		<tbody>
+			<tr><td><input type="checkbox" name="choice" name=""></td>
+				<td>皎月</td><td>女</td><td>陕西西安</td></tr>
+			<tr><td><input type="checkbox" name="choice" name=""></td>
+				<td>奥巴马</td><td>男</td><td>湖南长沙</td></tr>
+			<tr><td><input type="checkbox" name="choice" name="" checked></td>
+				<td>盲僧</td><td>男</td><td>陕西宝鸡</td></tr>
+			<tr><td><input type="checkbox" name="choice" name=""></td>
+				<td>蜘蛛</td><td>女</td><td>浙江温州</td></tr>
+			<tr><td><input type="checkbox" name="choice" name=""></td>
+				<td>吉格斯</td><td>男</td><td>北京</td></tr>
+			<tr><td><input type="checkbox" name="choice" name=""></td>
+				<td>狐狸</td><td>女</td><td>陕西延安</td></tr>
+			<tr><td><input type="checkbox" name="choice" name=""></td>
+				<td>露露</td><td>女</td><td>上海</td></tr>
+			<tr><td><input type="checkbox" name="choice" name=""></td>
+				<td>劫</td><td>男</td><td>浙江宁波</td></tr>
+			<tr><td><input type="checkbox" name="choice" name=""></td>
+				<td>韦鲁斯</td><td>男</td><td>陕西榆林</td></tr>
+		</tbody>
+	</table>
+</body>
+</html>
