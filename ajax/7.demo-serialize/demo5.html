@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ceshi</title>
+    <script src='http://libs.baidu.com/jquery/2.0.0/jquery.min.js'></script>
+<script type="text/javascript">
+
+	$(function(){
+	  	let obj={a:1,b:2,c:3};
+		let k = $.param(obj);
+		alert(k);       // 输出  a=1&b=2&c=3
+	})
+
+</script>
+</head>
+<body>
+	<p>$.param()方法: 它是serialize()方法的核心，用来对一个数组或对象按照key/value进行序列化。</p>
+</body>
+</html>

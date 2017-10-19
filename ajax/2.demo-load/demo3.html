@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ajax筛选加载html页面</title>
+    <script src='http://libs.baidu.com/jquery/2.0.0/jquery.min.js'></script>
+    <style type="text/css">
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-size: 12px;
+    }
+
+    .comment {
+        margin-top: 10px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        background: #DDD;
+    }
+
+    .comment h6 {
+        font-weight: 700;
+        font-size: 14px;
+    }
+
+    .para {
+        margin-top: 5px;
+        text-indent: 2em;
+        background: #DDD;
+    }
+    </style>
+    <script type="text/javascript">
+    	$(function(){
+    		$('#send').click(function(){
+    			/*load(url [, data][, callback])*/
+                /*url参数语法结构 'url selector' => 只加载选择器所选的内容*/
+                /*
+                    load()方法的传递方式根据参数data来自动指定。
+                    没有参数传递 => GET
+                    有参数传递 => POST
+                */
+                //只加载页面中类为para的内容
+    			$('#resText').load('test.html .para', function(responseText, textStatus, XMLHttpRequest){
+                        //responseText  请求返回的内容
+                        //textStatus    请求状态: success, error, notmodified, timeout 4种
+                        //XMLHttpRequest对象 
+                        alert($(this).html());//在这里this指向的是当前的DOM对象，即 $("#resText")[0]
+                        alert(responseText);
+                        alert(textStatus);
+                        alert(XMLHttpRequest);   
+                });
+    		});
+    	});
+    </script>
+</head>
+
+<body>
+    <input type="button" id="send" value="Ajax获取" name="">
+    <div class="comment">已有评论:</div>
+    <div id="resText"></div>
+</body>
+
+</html>

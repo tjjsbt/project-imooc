@@ -1,0 +1,15 @@
+<?xml version='2.0' encoding='UTF-8'?>
+<response>
+	<!-- 信息请求的状态。1:信息请求成功。2:请求成功但没有新信息。 -->
+	<status>1</status> 
+	<!-- 记录信息请求的时间，用来读取该时间戳后用户提交的新数据 -->
+	<time>1170323512</time>
+	<message>
+		<author>Chris</author>
+		<text>沙发!</text>
+	</message>
+	<message>
+		<author>Andy</author>
+		<text>板凳!</text>
+	</message>
+</response>

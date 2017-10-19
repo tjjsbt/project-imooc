@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>聊天室</title>
+    <script src='http://libs.baidu.com/jquery/2.0.0/jquery.min.js'></script>
+    <style type="text/css">
+    body {
+        margin: 0;
+        padding: 0;
+        font-size: 12px;
+    }
+
+    #messagewindow {
+        height: 250px;
+        border: 1px solid;
+        padding: 5px;
+        overflow: auto;
+    }
+
+    #wrapper {
+        margin: auto;
+        width: 438px;
+    }
+    </style>
+    <script type="text/javascript">
+    /*
+           	1.提交用户聊天信息
+           	2.浏览器每隔一定时间更新数据
+        */
+    $(function() {
+        let timestamp = 0; //时间戳
+        updateMsg();
+        //1.提交用户信息
+        $('#chatform').submit(function() {
+            $.post('backend.php', { //要传递的数据
+                message: $('#msg').val(),
+                name: $('#author').val(),
+                action: 'postmsg',
+                time: timeStamp
+            }, function(xml) {
+                $('#msg').val(''); //清空信息文本框内容
+                addMessages(xml); //处理xml
+            });
+            return false; //阻止表单提交
+        });
+
+        //到服务器查询新信息，并调用addMesages()来响应返回的xml文档
+        function updateMsg() {
+            $.post('backend.php', { time: timestamp }, function(xml) {
+                $('#loading').remove(); //移除loading信息,等待提示
+                addMessages(xml); //调用解析xml的函数
+            });
+            //每隔4秒读取一次
+            setTimeout('updateMsg()', 4000);
+        }
+
+        //处理xml响应信息
+        function addMessages(xml) {
+            //在返回的xml中查找status标签
+            if ($('status', xml).text() == '2') {
+                return; //如果值为2，则表示请求成功但没有新信息
+            }
+            timestamp = $('time', xml).text(); //获取时间戳
+            //将xml中的数据遍历出来
+            $('message', xml).each(function() {
+                let author = $('author', this).text(); //发布者
+                let content = $('text', this).text(); //内容
+                let htmlcode = '<strong>' + author + '</strong>: ' + content + '</br>';
+                $('#messagewindow').prepend(htmlcode); //添加到文档中
+            });
+        }
+    });
+    </script>
+</head>
+
+<body>
+    <div id="wrapper">
+        <p id="messagewindow"><span id="loading">加载中...</span></p>
+        <form id="chatform">
+            姓名:<input type="text" id="author" size="50" name="">
+            <br/> 
+            内容:<input type="text" id="msg" size="50" name="">
+            <br/>
+            <input type="submit" value="发送" name="">
+            <br/>
+        </form>
+    </div>
+</body>
+
+</html>
